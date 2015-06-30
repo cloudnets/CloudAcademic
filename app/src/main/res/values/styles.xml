@@ -1,8 +1,12 @@
 <resources>
-
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <!--Tema principal para el aspecto burbujas-->
+    <style name="AppTheme" parent="@android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
     </style>
-
+    <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">@color/primary_color</item>
+    </style>
+    <!--Tema para la activity inicial sin elementos-->
+    <style name="StartTheme" parent="android:Theme.Holo.Light.NoActionBar.Fullscreen">
+    </style>
 </resources>
