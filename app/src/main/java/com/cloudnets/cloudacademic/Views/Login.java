@@ -3,6 +3,7 @@ package com.cloudnets.cloudacademic.Views;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -10,7 +11,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
 import com.cloudnets.cloudacademic.R;
 
 /**
@@ -36,6 +36,7 @@ public class Login extends Activity {
         setContentView(R.layout.activity_login);
         inicializarElementosVista();
         contador();
+        cambiarFondo();
     }
 
     public void inicializarElementosVista(){
@@ -63,7 +64,9 @@ public class Login extends Activity {
             public void onTick(long millisUntilFinished){
             }
             public void onFinish(){
-                contenedor_login.setBackgroundResource(R.mipmap.login);
+                //contenedor_login.setBackgroundResource(R.mipmap.login);
+                //overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                show();
             }
         }.start();
     }
@@ -76,12 +79,18 @@ public class Login extends Activity {
         imgLogo.startAnimation(mover);
     }
 
-    public void showViews(){
-        Animation show;
-        show = AnimationUtils.loadAnimation(this.getApplicationContext(), R.anim.fade);
-        show.reset();
-        show.setFillAfter(true);
-        contenedor_credenciales.startAnimation(show);
+    public void show(){
+        showViews(true);
+        contenedor_credenciales.setVisibility(View.VISIBLE);
+    }
+
+    public void showViews(boolean state){
+        if(state){
+            Animation show;
+            show = AnimationUtils.loadAnimation(this.getApplicationContext(), R.anim.fade);
+            show.reset();
+            contenedor_credenciales.startAnimation(show);
+        }
     }
 
 }

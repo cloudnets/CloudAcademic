@@ -39,7 +39,8 @@
         android:id="@+id/contenedor_credenciales"
         android:layout_marginBottom="42dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible">
 
         <LinearLayout
             android:orientation="horizontal"
