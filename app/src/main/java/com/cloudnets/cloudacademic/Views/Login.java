@@ -8,6 +8,9 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+
 import com.cloudnets.cloudacademic.R;
 
 /**
@@ -22,6 +25,8 @@ import com.cloudnets.cloudacademic.R;
 public class Login extends Activity {
 
     private ImageView imgLogo;
+    private RelativeLayout contenedor_login;
+    private LinearLayout contenedor_credenciales;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,8 @@ public class Login extends Activity {
     }
 
     public void inicializarElementosVista(){
+        contenedor_login = (RelativeLayout) findViewById(R.id.contenedor_login);
+        contenedor_credenciales = (LinearLayout) findViewById(R.id.contenedor_credenciales);
         imgLogo = (ImageView) findViewById(R.id.logo_login);
     }
 
@@ -44,17 +51,37 @@ public class Login extends Activity {
             public void onTick(long millisUntilFinished){
             }
             public void onFinish(){
-                moverLogo();
+                logoMove();
             }
         }.start();
     }
 
-    public void moverLogo(){
+    public void cambiarFondo(){
+        int segundos = 3;
+        int milisegundos = segundos*1000;
+        new CountDownTimer(milisegundos,1000) {
+            public void onTick(long millisUntilFinished){
+            }
+            public void onFinish(){
+                contenedor_login.setBackgroundResource(R.mipmap.login);
+            }
+        }.start();
+    }
+
+    public void logoMove(){
         Animation mover;
         mover = AnimationUtils.loadAnimation(this.getApplicationContext(), R.anim.mover);
         mover.reset();
         mover.setFillAfter(true);
         imgLogo.startAnimation(mover);
+    }
+
+    public void showViews(){
+        Animation show;
+        show = AnimationUtils.loadAnimation(this.getApplicationContext(), R.anim.fade);
+        show.reset();
+        show.setFillAfter(true);
+        contenedor_credenciales.startAnimation(show);
     }
 
 }
