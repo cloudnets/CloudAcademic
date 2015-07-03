@@ -3,7 +3,6 @@ package com.cloudnets.cloudacademic.Views;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
@@ -19,11 +18,6 @@ import com.cloudnets.cloudacademic.R;
  */
 public class Inicio extends Activity {
 
-    public static final int segundos = 8;
-    public static final int milisegundos = segundos*1000;
-    private ProgressBar pbProgreso;
-    private static final int delay = 2;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,32 +31,33 @@ public class Inicio extends Activity {
     /**Funciones para inicializar los elementos en la vista
      *****/
     public void inicializarElementosVista(){
-        pbProgreso = (ProgressBar) findViewById(R.id.pbProgreso);
-        pbProgreso.setMax(finalizarProgreso());
+        ProgressBar pbProgreso = (ProgressBar) findViewById(R.id.pbProgreso);
     }
 
-    /**Funciones encargadas del manejo de los recursos en la vista
+    /**Funcion encargada del manejo de los recursos en la vista
      *****/
     public void inicializarProgreso(){
-        new CountDownTimer(milisegundos,1000) {
-            public void onTick(long millisUntilFinished){
-                pbProgreso.setProgress(startProgreso(millisUntilFinished));
+        Thread timer = new Thread() {
+            // El nuevo Thread exige el metodo run
+            public void run() {
+                try {
+                    sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    Intent login = new Intent(Inicio.this,Login.class);
+                    startActivity(login);
+                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                    finish();
+                }
             }
-            public void onFinish(){
-                Intent login = new Intent(Inicio.this,Login.class);
-                startActivity(login);
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-                finish();
-            }
-        }.start();
+        };
+        timer.start();
     }
 
-    public int startProgreso(long miliseconds){
-        return (int)((milisegundos-miliseconds)/1000);
-    }
-
-    public int finalizarProgreso(){
-        return (segundos-delay);
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
     }
 
 }

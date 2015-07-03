@@ -5,8 +5,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.cloudnets.cloudacademic.Views.Login"
-    android:background="@mipmap/fondo"
-    android:id="@+id/contenedor_login">
+    android:id="@+id/contenedor_login"
+    android:background="#ff2384bb">
 
     <LinearLayout
         android:orientation="vertical"
@@ -18,15 +18,15 @@
         android:gravity="bottom">
 
         <ImageView
-            android:layout_width="244dp"
-            android:layout_height="156dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/logo_login"
             android:contentDescription="@string/logo"
-            android:background="@drawable/login1" />
+            android:src="@drawable/logo3" />
 
         <Space
             android:layout_width="20dp"
-            android:layout_height="2dp"
+            android:layout_height="23dp"
             android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
@@ -56,6 +56,7 @@
                 android:id="@+id/imageView"
                 android:src="@mipmap/ic_user"
                 android:paddingLeft="5dp"
+                android:contentDescription="@android:string/ok"
                 android:paddingTop="5dp" />
 
             <EditText
@@ -63,10 +64,12 @@
                 android:layout_height="40dp"
                 android:ems="10"
                 android:id="@+id/txtUsuario"
+                android:inputType="textPersonName"
                 android:textColor="@color/primary_dark_color"
                 android:textColorHint="#ff184aa7"
                 android:hint="@string/usuario"
                 android:gravity="center"
+                android:maxLines="1"
                 android:layout_gravity="center_horizontal" />
         </LinearLayout>
 
@@ -87,19 +90,21 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/imageView2"
                 android:src="@mipmap/ic_pass"
+                android:contentDescription="@android:string/ok"
                 android:paddingTop="5dp"
                 android:paddingLeft="5dp" />
 
             <EditText
                 android:layout_width="220dp"
                 android:layout_height="40dp"
-                android:inputType="numberPassword"
+                android:inputType="text"
                 android:ems="10"
                 android:id="@+id/txtContrasena"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/primary_dark_color"
                 android:textColorHint="#ff184aa7"
                 android:hint="@string/contrasena"
+                android:maxLines="1"
                 android:gravity="center" />
         </LinearLayout>
 

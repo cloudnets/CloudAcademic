@@ -10,4 +10,7 @@
     <!--Tema para la activity inicial sin elementos-->
     <style name="StartTheme" parent="android:Theme.Holo.Light.NoActionBar.Fullscreen">
     </style>
+    <style name="Background" parent="android:Theme.Holo.Light.NoActionBar.Fullscreen">
+        <item name="android:background">@drawable/fondo</item>
+    </style>
 </resources>

@@ -1,4 +1,5 @@
 <resources>
+    <!-- String de elementos visuales -->
     <string name="app_name">Cloud Academic</string>
     <string name="logo">Logo</string>
     <string name="action_settings">Opciones</string>
@@ -7,5 +8,20 @@
     <string name="usuario">Usuario</string>
     <string name="contrasena">Contraseña</string>
     <string name="validar">Iniciar Sesión</string>
-    <string name="sia">—Sistema Integral Acádemico—</string>
+    <string name="titulo">Cloud Academic</string>
+    <string name="sia">Sistema Integral Acádemico en la Nube</string>
+    <string name="title_activity_colegios">Colegios</string>
+    <string name="colegios">Ingrese una institución</string>
+    <string name="avanzar">Avanzar</string>
+
+    <!-- String mensajes de alertas -->
+    <string name="mensaje_alerta_1">No se ah detectado una conexión activa a internet,
+        por favor revise el estado de su red.</string>
+    <string name="mensaje_alerta_2">Los campos de las credenciales no pueden estar vacios.</string>
+
+    <!-- String de titulos de errores -->
+    <string name="error_1">Error de conexión.</string>
+    <string name="error_2">Error en credenciales.</string>
+
+    <string name="url_con">http://127.0.0.1:63140</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.cloudnets.cloudacademic.Views;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -8,10 +9,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
+import com.cloudnets.cloudacademic.Implementacion.Funciones;
+import com.cloudnets.cloudacademic.Models.Proceso;
 import com.cloudnets.cloudacademic.R;
+import com.cloudnets.cloudacademic.Requests.UserRequest;
 
 /**
  * Created by Deimer on 29/06/2015.
@@ -24,9 +29,15 @@ import com.cloudnets.cloudacademic.R;
  */
 public class Login extends Activity {
 
-    private ImageView imgLogo;
-    private RelativeLayout contenedor_login;
-    private LinearLayout contenedor_credenciales;
+    public ImageView imgLogo;
+    public LinearLayout contenedor_credenciales;
+    public TextView txtUsuario;
+    public TextView txtContrasena;
+    public Button butValidar;
+    private UserRequest uResquest = new UserRequest(this);
+    private Funciones funciones = new Funciones(this);
+    String user = "";
+    String pass = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +51,22 @@ public class Login extends Activity {
     }
 
     public void inicializarElementosVista(){
-        contenedor_login = (RelativeLayout) findViewById(R.id.contenedor_login);
         contenedor_credenciales = (LinearLayout) findViewById(R.id.contenedor_credenciales);
+        txtUsuario = (TextView) findViewById(R.id.txtUsuario);
+        txtContrasena = (TextView) findViewById(R.id.txtContrasena);
+        butValidar = (Button) findViewById(R.id.butValidar);
         imgLogo = (ImageView) findViewById(R.id.logo_login);
+        butValidar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean estadoInternet = funciones.hayConexion();
+                if(estadoInternet){
+                    validarUsuario();
+                }else{
+                    funciones.alertasDialog(getString(R.string.error_1), getString(R.string.mensaje_alerta_1));
+                }
+            }
+        });
     }
 
     public void contador(){
@@ -90,6 +114,42 @@ public class Login extends Activity {
             show = AnimationUtils.loadAnimation(this.getApplicationContext(), R.anim.fade);
             show.reset();
             contenedor_credenciales.startAnimation(show);
+        }
+    }
+
+    public void validarUsuario(){
+        user = txtUsuario.getText().toString();
+        pass = txtContrasena.getText().toString();
+        if((user.equalsIgnoreCase(""))&&(pass.equalsIgnoreCase(""))){
+            funciones.alertasDialog(getString(R.string.error_2),
+                    getString(R.string.mensaje_alerta_2));
+        }else{
+            String parametros = user+","+pass;
+            peticionLogin(parametros);
+        }
+    }
+
+    public void peticionLogin(String parametros){
+        loginAsincronico login = new loginAsincronico();
+        login.execute(parametros);
+    }
+
+    private class loginAsincronico extends AsyncTask<String, Integer, Boolean>{
+        Proceso proceso = new Proceso();
+        protected void onPreExecute(){
+            funciones.alertasAsincronicas("Validando usuario", "Enviando informacion");
+        }
+        protected Boolean doInBackground(String... par) {
+            proceso = uResquest.Login(user, pass);
+            return proceso.isResultado();
+        }
+        public void onPostExecute(Boolean result){
+            funciones.cancelarDialog();
+            if(result){
+                funciones.alertasDialog(proceso.getTitulo(),proceso.getMensaje());
+            }else{
+                funciones.alertasDialog(proceso.getTitulo(),proceso.getMensaje());
+            }
         }
     }
 
