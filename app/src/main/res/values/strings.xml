@@ -19,9 +19,14 @@
         por favor revise el estado de su red.</string>
     <string name="mensaje_alerta_2">Los campos de las credenciales no pueden estar vacios.</string>
 
+    <!-- String mensajes de información -->
+    <string name="validar_1">Validando usuario</string>
+    <string name="validar_2">Enviando información</string>
+
     <!-- String de titulos de errores -->
     <string name="error_1">Error de conexión.</string>
     <string name="error_2">Error en credenciales.</string>
 
-    <string name="url_con">http://127.0.0.1:63140</string>
+    <!-- String de url de conexion -->
+    <string name="url_con">http://www.cloudnets.co/cloudacademicws</string>
 </resources>

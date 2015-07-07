@@ -3,6 +3,8 @@ package com.cloudnets.cloudacademic.Requests;
 import android.content.Context;
 import android.util.Log;
 import com.cloudnets.cloudacademic.Models.Proceso;
+import com.cloudnets.cloudacademic.R;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -14,13 +16,16 @@ import org.json.JSONObject;
 
 /**
  * Creado por Deimer Villa on 30/06/2015.
+ * ----------------------------------------------------
+ * Clase de peticiones request del objeto usuario:
+ * Esta clase es la encargada de hacer las peticiones
+ * http request del modelo usuario, asi mismo tambien se encarga
+ * de la validacion y logueo del usuario.
  */
 public class UserRequest {
 
     //Contexto de la clase para controlar las funciones
-    private Context contexto;
-    //Direccion url
-    String ipURL = "http://10.0.2.2:63140";
+    public Context contexto;
 
     public void userRequest(){
     }
@@ -30,11 +35,9 @@ public class UserRequest {
         userRequest();
     }
 
-    public void setContext(Context contexto){
-        this.contexto = contexto;
-    }
+    /*public void setContext(Context contexto){ this.contexto = contexto; }*/
 
-    public Proceso Login(String user, String pass){
+    public Proceso Login(String user, String pass, String ipURL){
         Proceso proceso = new Proceso();
         HttpClient httpClient = new DefaultHttpClient();
         HttpPost postLogin = new HttpPost(ipURL+"/areas/api/usuario");
@@ -48,7 +51,8 @@ public class UserRequest {
                 postLogin.setEntity(entity);
                 HttpResponse resp = httpClient.execute(postLogin);
                 String respStr = EntityUtils.toString(resp.getEntity());
-                if(!respStr.equals("true")){
+                System.out.println(respStr);
+                if(respStr.equals("true")){
                     proceso.setResultado(false);
                     proceso.setTitulo("Error");
                     proceso.setMensaje("Credenciales incorrectas");

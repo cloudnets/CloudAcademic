@@ -19,7 +19,7 @@ import com.cloudnets.cloudacademic.R;
 import com.cloudnets.cloudacademic.Requests.UserRequest;
 
 /**
- * Created by Deimer on 29/06/2015.
+ * Creado por Deimer Villa on 29/06/2015.
  * ----------------------------------------------
  * Clase Login: Esta es la clase encargada de la
  * activity Login. En esta vista se encuentran las
@@ -60,9 +60,9 @@ public class Login extends Activity {
             @Override
             public void onClick(View v) {
                 boolean estadoInternet = funciones.hayConexion();
-                if(estadoInternet){
+                if (estadoInternet) {
                     validarUsuario();
-                }else{
+                } else {
                     funciones.alertasDialog(getString(R.string.error_1), getString(R.string.mensaje_alerta_1));
                 }
             }
@@ -124,23 +124,25 @@ public class Login extends Activity {
             funciones.alertasDialog(getString(R.string.error_2),
                     getString(R.string.mensaje_alerta_2));
         }else{
-            String parametros = user+","+pass;
-            peticionLogin(parametros);
+            peticionLogin();
         }
     }
 
-    public void peticionLogin(String parametros){
+    public void peticionLogin(){
         loginAsincronico login = new loginAsincronico();
-        login.execute(parametros);
+        login.execute();
     }
 
     private class loginAsincronico extends AsyncTask<String, Integer, Boolean>{
+        String ipURL = "";
         Proceso proceso = new Proceso();
         protected void onPreExecute(){
-            funciones.alertasAsincronicas("Validando usuario", "Enviando informacion");
+            //Direccion url
+            ipURL = getString(R.string.url_con);
+            funciones.alertasAsincronicas(getString(R.string.validar_1), getString(R.string.validar_2));
         }
         protected Boolean doInBackground(String... par) {
-            proceso = uResquest.Login(user, pass);
+            proceso = uResquest.Login(user, pass, ipURL);
             return proceso.isResultado();
         }
         public void onPostExecute(Boolean result){

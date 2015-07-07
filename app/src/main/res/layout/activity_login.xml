@@ -66,7 +66,7 @@
                 android:id="@+id/txtUsuario"
                 android:inputType="textPersonName"
                 android:textColor="@color/primary_dark_color"
-                android:textColorHint="#ff184aa7"
+                android:textColorHint="#d7307bab"
                 android:hint="@string/usuario"
                 android:gravity="center"
                 android:maxLines="1"
@@ -102,7 +102,7 @@
                 android:id="@+id/txtContrasena"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/primary_dark_color"
-                android:textColorHint="#ff184aa7"
+                android:textColorHint="#d7307bab"
                 android:hint="@string/contrasena"
                 android:maxLines="1"
                 android:gravity="center" />
