@@ -1,9 +1,9 @@
 #
-# generated on 2015/07/07 04:58:34
+# generated on 2015/07/13 03:32:47
 #
 # --table-start--
 dataClass=com.cloudnets.cloudacademic.Models.Docente
-tableName=Docentes
+tableName=docentes
 # --table-fields-start--
 # --field-start--
 fieldName=id
@@ -12,7 +12,7 @@ generatedId=true
 # --field-start--
 fieldName=identificacion
 canBeNull=false
-indexName=Docentes_identificacion_idx
+indexName=docentes_identificacion_idx
 # --field-end--
 # --field-start--
 fieldName=tipo_id
@@ -21,7 +21,7 @@ canBeNull=false
 # --field-start--
 fieldName=primer_nombre
 canBeNull=false
-indexName=Docentes_primer_nombre_idx
+indexName=docentes_primer_nombre_idx
 # --field-end--
 # --field-start--
 fieldName=segundo_nombre
@@ -30,7 +30,7 @@ canBeNull=false
 # --field-start--
 fieldName=primer_apellido
 canBeNull=false
-indexName=Docentes_primer_apellido_idx
+indexName=docentes_primer_apellido_idx
 # --field-end--
 # --field-start--
 fieldName=segundo_apellido
@@ -55,7 +55,7 @@ canBeNull=false
 # --field-start--
 fieldName=email
 canBeNull=false
-indexName=Docentes_email_idx
+indexName=docentes_email_idx
 # --field-end--
 # --field-start--
 fieldName=genero
@@ -70,7 +70,7 @@ canBeNull=false
 #################################
 # --table-start--
 dataClass=com.cloudnets.cloudacademic.Models.Estudiante
-tableName=Estudiantes
+tableName=estudiantes
 # --table-fields-start--
 # --field-start--
 fieldName=id
@@ -79,7 +79,7 @@ generatedId=true
 # --field-start--
 fieldName=identificacion
 canBeNull=false
-indexName=Estudiantes_identificacion_idx
+indexName=estudiantes_identificacion_idx
 # --field-end--
 # --field-start--
 fieldName=tipo_id
@@ -88,7 +88,7 @@ canBeNull=false
 # --field-start--
 fieldName=primer_nombre
 canBeNull=false
-indexName=Estudiantes_primer_nombre_idx
+indexName=estudiantes_primer_nombre_idx
 # --field-end--
 # --field-start--
 fieldName=segundo_nombre
@@ -97,7 +97,7 @@ canBeNull=false
 # --field-start--
 fieldName=primer_apellido
 canBeNull=false
-indexName=Estudiantes_primer_apellido_idx
+indexName=estudiantes_primer_apellido_idx
 # --field-end--
 # --field-start--
 fieldName=segundo_apellido
@@ -128,19 +128,24 @@ fieldName=estrato
 canBeNull=false
 # --field-end--
 # --field-start--
-fieldName=cod_eps
+fieldName=eps
 canBeNull=false
 # --field-end--
 # --field-start--
-fieldName=cod_padre
+fieldName=nom_grado
 canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=cod_grado
+canBeNull=false
+indexName=estudiantes_cod_grado_idx
 # --field-end--
 # --table-fields-end--
 # --table-end--
 #################################
 # --table-start--
 dataClass=com.cloudnets.cloudacademic.Models.Grado
-tableName=Grados
+tableName=grados
 # --table-fields-start--
 # --field-start--
 fieldName=id
@@ -149,15 +154,16 @@ generatedId=true
 # --field-start--
 fieldName=nombre
 canBeNull=false
-indexName=Grados_nombre_idx
+indexName=grados_nombre_idx
 # --field-end--
 # --field-start--
-fieldName=orden
+fieldName=codigo
 canBeNull=false
 # --field-end--
 # --field-start--
-fieldName=cod_nivelEdu
+fieldName=cod_docente
 canBeNull=false
+indexName=grados_cod_docente_idx
 # --field-end--
 # --table-fields-end--
 # --table-end--
@@ -171,16 +177,16 @@ fieldName=id
 generatedId=true
 # --field-end--
 # --field-start--
+fieldName=identificacion
+canBeNull=false
+# --field-end--
+# --field-start--
 fieldName=usuario
 canBeNull=false
 indexName=usuarios_usuario_idx
 # --field-end--
 # --field-start--
 fieldName=password
-canBeNull=false
-# --field-end--
-# --field-start--
-fieldName=identificacion
 canBeNull=false
 # --field-end--
 # --field-start--
@@ -197,15 +203,11 @@ canBeNull=false
 indexName=usuarios_email_idx
 # --field-end--
 # --field-start--
-fieldName=cod_perfil
+fieldName=perfil
 canBeNull=false
 # --field-end--
 # --field-start--
-fieldName=cod_tipoUsuario
-canBeNull=false
-# --field-end--
-# --field-start--
-fieldName=nom_tipoUsuario
+fieldName=tipoUsuario
 canBeNull=false
 # --field-end--
 # --table-fields-end--

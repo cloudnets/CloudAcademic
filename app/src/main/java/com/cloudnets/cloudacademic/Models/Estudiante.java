@@ -14,11 +14,8 @@ import java.util.Date;
  * Cualquier atributo o propiedad del objeto estudiante, debe ser agregado
  * aqui para que este se agregue en la base de datos.
  */
-@DatabaseTable(tableName = "Estudiantes")
+@DatabaseTable(tableName = "estudiantes")
 public class Estudiante {
-
-    /*identificacion, tipo_id, primerNombre, segundoNombre, primerApellido, fechaNacimiento,
-      genero, direccion, telefono, celular, estrato, cod_eps, cod_padres*/
 
     @DatabaseField(generatedId = true)
     private int id;//LLave primaria
@@ -48,27 +45,33 @@ public class Estudiante {
     @DatabaseField(canBeNull = false)
     private String estrato;
     @DatabaseField(canBeNull = false)
-    private String cod_eps;
+    private String eps;
     @DatabaseField(canBeNull = false)
-    private String cod_padre;
+    private String nom_grado;
+    @DatabaseField(index = true, canBeNull = false)
+    private String cod_grado;
 
     public void Estudiante(){}
 
-    public Estudiante(String identificacion, String tipo_id, String primer_nombre, String segundo_nombre, String primer_apellido, String segundo_apellido, Date fecha_nacimiento, String genero, String direccion, String telefono, String celular, String estrato, String cod_eps, String cod_padre) {
-        this.setIdentificacion(identificacion);
-        this.setTipo_id(tipo_id);
-        this.setPrimer_nombre(primer_nombre);
-        this.setSegundo_nombre(segundo_nombre);
-        this.setPrimer_apellido(primer_apellido);
-        this.setSegundo_apellido(segundo_apellido);
-        this.setFecha_nacimiento(fecha_nacimiento);
-        this.setGenero(genero);
-        this.setDireccion(direccion);
-        this.setTelefono(telefono);
-        this.setCelular(celular);
-        this.setEstrato(estrato);
-        this.setCod_eps(cod_eps);
-        this.setCod_padre(cod_padre);
+    public Estudiante(String identificacion, String tipo_id, String primer_nombre, String segundo_nombre,
+                      String primer_apellido, String segundo_apellido, Date fecha_nacimiento,
+                      String genero, String direccion, String telefono, String celular, String estrato,
+                      String eps, String nom_grado, String cod_grado) {
+        this.identificacion = identificacion;
+        this.tipo_id = tipo_id;
+        this.primer_nombre = primer_nombre;
+        this.segundo_nombre = segundo_nombre;
+        this.primer_apellido = primer_apellido;
+        this.segundo_apellido = segundo_apellido;
+        this.fecha_nacimiento = fecha_nacimiento;
+        this.genero = genero;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.celular = celular;
+        this.estrato = estrato;
+        this.eps = eps;
+        this.nom_grado = nom_grado;
+        this.cod_grado = cod_grado;
     }
 
     //Getters del modelo estudiante
@@ -111,11 +114,14 @@ public class Estudiante {
     public String getEstrato() {
         return estrato;
     }
-    public String getCod_eps() {
-        return cod_eps;
+    public String getEps() {
+        return eps;
     }
-    public String getCod_padre() {
-        return cod_padre;
+    public String getNom_grado() {
+        return nom_grado;
+    }
+    public String getCod_grado() {
+        return cod_grado;
     }
 
     //Setters del modelo estudiante
@@ -155,10 +161,14 @@ public class Estudiante {
     public void setEstrato(String estrato) {
         this.estrato = estrato;
     }
-    public void setCod_eps(String cod_eps) {
-        this.cod_eps = cod_eps;
+    public void setEps(String eps) {
+        this.eps = eps;
     }
-    public void setCod_padre(String cod_padre) {
-        this.cod_padre = cod_padre;
+    public void setNom_grado(String nom_grado) {
+        this.nom_grado = nom_grado;
     }
+    public void setCod_grado(String cod_grado) {
+        this.cod_grado = cod_grado;
+    }
+
 }

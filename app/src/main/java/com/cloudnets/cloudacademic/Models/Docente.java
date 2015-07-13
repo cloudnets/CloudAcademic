@@ -14,14 +14,11 @@ import java.util.Date;
  * Cualquier atributo o propiedad del objeto estudiante, debe ser agregado
  * aqui para que este se agregue en la base de datos.
  */
-@DatabaseTable(tableName = "Docentes")
+@DatabaseTable(tableName = "docentes")
 public class Docente {
 
     @DatabaseField(generatedId = true)
     private int id;//LLave primaria
-
-    /*identificacion, tipo_id, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido,
-      telefono, celular, direccion, fecha_nacimiento, email, genero, fecha_vinculacion*/
 
     @DatabaseField(index = true, canBeNull = false)
     private String identificacion;
@@ -52,20 +49,22 @@ public class Docente {
 
     public void Docente(){}
 
-    public Docente(String identificacion, String tipo_id, String primer_nombre, String segundo_nombre, String primer_apellido, String segundo_apellido, String telefono, String celular, String direccion, Date fecha_nacimiento, String email, String genero, Date fecha_vinculacion) {
-        this.setIdentificacion(identificacion);
-        this.setTipo_id(tipo_id);
-        this.setPrimer_nombre(primer_nombre);
-        this.setSegundo_nombre(segundo_nombre);
-        this.setPrimer_apellido(primer_apellido);
-        this.setSegundo_apellido(segundo_apellido);
-        this.setTelefono(telefono);
-        this.setCelular(celular);
-        this.setDireccion(direccion);
-        this.setFecha_nacimiento(fecha_nacimiento);
-        this.setEmail(email);
-        this.setGenero(genero);
-        this.setFecha_vinculacion(fecha_vinculacion);
+    public Docente(String identificacion, String tipo_id, String primer_nombre, String segundo_nombre,
+                   String primer_apellido, String segundo_apellido, String telefono, String celular,
+                   String direccion, Date fecha_nacimiento, String email, String genero, Date fecha_vinculacion) {
+        this.identificacion = identificacion;
+        this.tipo_id = tipo_id;
+        this.primer_nombre = primer_nombre;
+        this.segundo_nombre = segundo_nombre;
+        this.primer_apellido = primer_apellido;
+        this.segundo_apellido = segundo_apellido;
+        this.telefono = telefono;
+        this.celular = celular;
+        this.direccion = direccion;
+        this.fecha_nacimiento = fecha_nacimiento;
+        this.email = email;
+        this.genero = genero;
+        this.fecha_vinculacion = fecha_vinculacion;
     }
 
     //Getters del modelo Docente

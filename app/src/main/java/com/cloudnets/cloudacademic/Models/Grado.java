@@ -12,7 +12,7 @@ import com.j256.ormlite.table.DatabaseTable;
  * Cualquier atributo o propiedad del objeto grado, debe ser agregado
  * aqui para que este se agregue en la base de datos.
  */
-@DatabaseTable(tableName = "Grados")
+@DatabaseTable(tableName = "grados")
 public class Grado {
 
     @DatabaseField(generatedId = true)
@@ -21,40 +21,40 @@ public class Grado {
     @DatabaseField(index = true, canBeNull = false)
     private String nombre;
     @DatabaseField(canBeNull = false)
-    private String orden;
-    @DatabaseField(canBeNull = false)
-    private String cod_nivelEdu;
+    private String codigo;
+    @DatabaseField(index = true, canBeNull = false)
+    private String cod_docente;
 
     public void Grado(){}
 
-    public Grado(String nombre, String orden, String cod_nivelEdu) {
-        this.setNombre(nombre);
-        this.setOrden(orden);
-        this.setCod_nivelEdu(cod_nivelEdu);
+    public Grado(String nombre, String codigo, String cod_docente) {
+        this.nombre = nombre;
+        this.codigo = codigo;
+        this.cod_docente = cod_docente;
     }
 
-    //Getters del modelo grado
+    //Getters para obtener los valores del modelo grado
     public int getId() {
         return id;
     }
     public String getNombre() {
         return nombre;
     }
-    public String getOrden() {
-        return orden;
+    public String getCodigo() {
+        return codigo;
     }
-    public String getCod_nivelEdu() {
-        return cod_nivelEdu;
+    public String getCod_docente() {
+        return cod_docente;
     }
 
-    //Setters del modelo grado
+    //Setters para agregar valores al modelo grado
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    public void setOrden(String orden) {
-        this.orden = orden;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
-    public void setCod_nivelEdu(String cod_nivelEdu) {
-        this.cod_nivelEdu = cod_nivelEdu;
+    public void setCod_docente(String cod_docente) {
+        this.cod_docente = cod_docente;
     }
 }

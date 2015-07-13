@@ -18,6 +18,7 @@
     <string name="mensaje_alerta_1">No se ah detectado una conexión activa a internet,
         por favor revise el estado de su red.</string>
     <string name="mensaje_alerta_2">Los campos de las credenciales no pueden estar vacios.</string>
+    <string name="mensaje_alerta_3">El usuario o la contraseña no son validos.</string>
 
     <!-- String mensajes de información -->
     <string name="validar_1">Validando usuario</string>
@@ -28,5 +29,6 @@
     <string name="error_2">Error en credenciales.</string>
 
     <!-- String de url de conexion -->
-    <string name="url_con">http://www.cloudnets.co/cloudacademicws</string>
+    <string name="url_con">http://www.cloudnets.co/cloudws</string>
+    <string name="url_test">http://192.168.1.102</string>
 </resources>

@@ -1,9 +1,11 @@
 package com.cloudnets.cloudacademic.Views;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -13,10 +15,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.cloudnets.cloudacademic.Implementacion.Funciones;
+import com.cloudnets.cloudacademic.Controllers.UsuarioController;
+import com.cloudnets.cloudacademic.Helpers.Funciones;
+import com.cloudnets.cloudacademic.Implementacion.ImplementacionUsuario;
 import com.cloudnets.cloudacademic.Models.Proceso;
+import com.cloudnets.cloudacademic.Models.Usuario;
 import com.cloudnets.cloudacademic.R;
-import com.cloudnets.cloudacademic.Requests.UserRequest;
+import com.cloudnets.cloudacademic.Requests.RequestLogin;
 
 /**
  * Creado por Deimer Villa on 29/06/2015.
@@ -34,10 +39,16 @@ public class Login extends Activity {
     public TextView txtUsuario;
     public TextView txtContrasena;
     public Button butValidar;
-    private UserRequest uResquest = new UserRequest(this);
-    private Funciones funciones = new Funciones(this);
+    private RequestLogin requestLogin;
+    private Funciones funciones;
     String user = "";
     String pass = "";
+    //Variable privada para el acceso al controlador del usuario
+    private UsuarioController usuarioController;
+    //Clase implementadora para las funciones de transcicion
+    private ImplementacionUsuario implUsuario = new ImplementacionUsuario();
+
+    private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +56,18 @@ public class Login extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
+        inicializarContexto();
         inicializarElementosVista();
         contador();
         cambiarFondo();
+    }
+
+    public void inicializarContexto(){
+        requestLogin = new RequestLogin(context);
+        funciones = new Funciones(context);
+        user = "";
+        pass = "";
+        usuarioController = new UsuarioController();
     }
 
     public void inicializarElementosVista(){
@@ -142,16 +162,27 @@ public class Login extends Activity {
             funciones.alertasAsincronicas(getString(R.string.validar_1), getString(R.string.validar_2));
         }
         protected Boolean doInBackground(String... par) {
-            proceso = uResquest.Login(user, pass, ipURL);
+            proceso = requestLogin.Login(user, pass, ipURL);
             return proceso.isResultado();
         }
         public void onPostExecute(Boolean result){
             funciones.cancelarDialog();
             if(result){
-                funciones.alertasDialog(proceso.getTitulo(),proceso.getMensaje());
+                mostrarInfo();
             }else{
+                txtContrasena.setText("");
                 funciones.alertasDialog(proceso.getTitulo(),proceso.getMensaje());
             }
+        }
+    }
+
+    public void mostrarInfo(){
+        try {
+            Usuario usuario = usuarioController.detalle(1, this.getApplicationContext());
+            funciones.alertasDialog("informacion del usuario", implUsuario.mostrarDetalles(usuario));
+            //Log.i("Usuario", implUsuario.mostrarDetalles(usuario));
+        }catch (Exception ex){
+            Log.e("Error al mostrar","Error: "+ex.getMessage().toString());
         }
     }
 

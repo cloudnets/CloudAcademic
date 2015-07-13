@@ -2,9 +2,10 @@ package com.cloudnets.cloudacademic.Requests;
 
 import android.content.Context;
 import android.util.Log;
+import com.cloudnets.cloudacademic.Controllers.UsuarioController;
+import com.cloudnets.cloudacademic.Implementacion.ImplementacionUsuario;
 import com.cloudnets.cloudacademic.Models.Proceso;
-import com.cloudnets.cloudacademic.R;
-
+import com.cloudnets.cloudacademic.Models.Usuario;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -22,20 +23,44 @@ import org.json.JSONObject;
  * http request del modelo usuario, asi mismo tambien se encarga
  * de la validacion y logueo del usuario.
  */
-public class UserRequest {
+public class RequestLogin {
 
     //Contexto de la clase para controlar las funciones
     public Context contexto;
+    //Variable privada para el acceso al controlador del usuario
+    private UsuarioController usuarioController = new UsuarioController();
 
-    public void userRequest(){
-    }
+    public void validacion(){}
 
-    public UserRequest(Context contexto){
+    public RequestLogin(Context contexto){
         this.contexto = contexto;
-        userRequest();
+        validacion();
     }
 
-    /*public void setContext(Context contexto){ this.contexto = contexto; }*/
+    public void setContext(Context contexto){
+        this.contexto = contexto;
+    }
+
+    public Boolean guardarUsuario(JSONObject json){
+        boolean res = false;
+        ImplementacionUsuario iU = new ImplementacionUsuario();
+        try {
+            Usuario usuario = new Usuario();
+            usuario.setIdentificacion(json.getString("identificacion"));
+            usuario.setUsuario(json.getString("usuario"));
+            usuario.setPassword(json.getString("pass"));
+            usuario.setNombres(json.getString("nombres"));
+            usuario.setApellidos(json.getString("apellidos"));
+            usuario.setEmail(json.getString("email"));
+            usuario.setPerfil(json.getString("perfil"));
+            usuario.setTipoUsuario(json.getString("tipoUsuario"));
+            res = usuarioController.crear(usuario, contexto);
+            Log.i("Datos Usuario", iU.mostrarDetalles(usuario));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
 
     public Proceso Login(String user, String pass, String ipURL){
         Proceso proceso = new Proceso();
@@ -51,27 +76,17 @@ public class UserRequest {
                 postLogin.setEntity(entity);
                 HttpResponse resp = httpClient.execute(postLogin);
                 String respStr = EntityUtils.toString(resp.getEntity());
-                System.out.println(respStr);
-                if(respStr.equals("true")){
-                    proceso.setResultado(false);
-                    proceso.setTitulo("Error");
-                    proceso.setMensaje("Credenciales incorrectas");
-                }else{
-                    JSONObject json = new JSONObject(respStr);
-                    String usuario = (json.getString("usuario"));
-                    String password = (json.getString("pass"));
-                    String identificacion = (json.getString("identificacion"));
-                    String nombres = (json.getString("nombres"));
-                    String apellidos = (json.getString("apellidos"));
-                    String email = (json.getString("email"));
-                    String cod_perfil = (json.getString("cod_perfil"));
-                    String cod_tipoUsuario = (json.getString("cod_tipoUsuario"));
-                    String nom_tipoUsuario = (json.getString("nom_tipoUsuario"));
-                    boolean success = json.getBoolean("success");
-                    Log.i("Datos json","user:"+usuario+",pass:"+password+",identificacion:"+identificacion+",nombres:"+nombres+",apellidos:"+apellidos+",email:"+email+",cod_perfil:"+cod_perfil+",cod_tipoUsuario:"+cod_tipoUsuario+",nom_tipoUsuario:"+nom_tipoUsuario);
-                    proceso.setResultado(success);
+                JSONObject json = new JSONObject(respStr);
+                boolean success = json.getBoolean("success");
+                if(success){
+                    boolean res = guardarUsuario(json);
+                    proceso.setResultado(res);
                     proceso.setTitulo("Conexion");
-                    proceso.setMensaje("Validacion exitosa");
+                    proceso.setMensaje("Login exitosa");
+                }else{
+                    proceso.setResultado(success);
+                    proceso.setTitulo("Sin conectar");
+                    proceso.setMensaje("El usuario o la contraseña no son validos.");
                 }
             } catch (JSONException e) {
                 proceso.setResultado(false);
