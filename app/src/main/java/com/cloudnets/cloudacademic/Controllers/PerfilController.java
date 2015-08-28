@@ -93,46 +93,13 @@ public class PerfilController /*Clase::Controller*/{
         return res;
     }
 
-    public boolean validarUser(Context contexto, String user, String pass){
-        boolean res = false;
-        try {
-            dbHelper = OpenHelperManager.getHelper(contexto,DatabaseHelper.class);
-            RuntimeExceptionDao<Perfil, Integer> perfilDao = dbHelper.getPerfilRuntimeDao();
-            int cantidad = (int)perfilDao.queryBuilder().where().eq("usuario",user).and().eq("pass",pass).countOf();
-            if (cantidad > 0){
-                activarSesionUsuario(user,pass, contexto);
-                res = true;
-            }
-        }catch (Exception ex){
-            Log.e("PerfilController(validarUser)", "Error: " + ex.toString());
-        }
-        return res;
-    }
-
-    public void activarSesionUsuario(String user, String pass, Context contexto){
-        Funciones funciones = new Funciones(contexto);
-        String newToken = funciones.generarToken();
-        try {
-            dbHelper = OpenHelperManager.getHelper(contexto,DatabaseHelper.class);
-            RuntimeExceptionDao<Perfil, Integer> perfilDao = dbHelper.getPerfilRuntimeDao();
-            UpdateBuilder<Perfil,Integer> updateBuilder = perfilDao.updateBuilder();
-            updateBuilder.where().eq("usuario",user).and().eq("pass",pass);
-            updateBuilder.updateColumnValue("token", newToken);
-            updateBuilder.update();
-        }catch (Exception ex){
-            Log.e("PerfilController(activarSesionUsuario)", "Error: " + ex.toString());
-        }
-    }
-
-    public boolean cerrarSesion(Context contexto){
+    public boolean cerrarSesion(Context contexto, Perfil perfil){
         boolean res = true;
         try {
             dbHelper = OpenHelperManager.getHelper(contexto,DatabaseHelper.class);
             RuntimeExceptionDao<Perfil, Integer> perfilDao = dbHelper.getPerfilRuntimeDao();
-            UpdateBuilder<Perfil,Integer> updateBuilder = perfilDao.updateBuilder();
-            updateBuilder.where().ne("token",null);
-            updateBuilder.updateColumnValue("token",null);
-            updateBuilder.update();
+            perfil.setToken("null");
+            perfilDao.update(perfil);
         }catch (Exception ex){
             res = false;
             Log.e("PerfilController(cerrarSesion)", "Error: " + ex.toString());

@@ -107,30 +107,30 @@ public class Principal extends Activity {
 
     /************************Funciones de los iconos************************/
     public void mensajeCerrar(){
-        AlertDialog.Builder dialogoCerrar = new AlertDialog.Builder(this);
-        dialogoCerrar.setTitle(getString(R.string.confirmacion_1));
-        dialogoCerrar.setMessage(getString(R.string.mensaje_confirmacion_1));
-        dialogoCerrar.setCancelable(false);
-        dialogoCerrar.setPositiveButton(getString(R.string.si), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which){
-                try{
-                    boolean res = perfilController.cerrarSesion(contexto);
-                    if(res){
-                        cerrarSesion();
-                    }
-                }catch (Throwable e){
-                    e.printStackTrace();
-                }
-            }
-        });
-        dialogoCerrar.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        dialogoCerrar.show();
+        //AlertDialog.Builder dialogoCerrar = new AlertDialog.Builder(this);
+        //dialogoCerrar.setTitle(getString(R.string.confirmacion_1));
+        //dialogoCerrar.setMessage(getString(R.string.mensaje_confirmacion_1));
+        //dialogoCerrar.setCancelable(false);
+        //dialogoCerrar.setPositiveButton(getString(R.string.si), new DialogInterface.OnClickListener() {
+        //    @Override
+        //    public void onClick(DialogInterface dialog, int which){
+        //        try{
+        //            boolean res = perfilController.cerrarSesion(contexto);
+        //            if(res){
+        //                cerrarSesion();
+        //            }
+        //        }catch (Throwable e){
+        //            e.printStackTrace();
+        //        }
+        //    }
+        //});
+        //dialogoCerrar.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+        //    @Override
+        //    public void onClick(DialogInterface dialog, int which) {
+        //        dialog.cancel();
+        //    }
+        //});
+        //dialogoCerrar.show();
     }
 
     @Override

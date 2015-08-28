@@ -50,6 +50,12 @@ public interface Routes {
             Callback<JsonObject> cb
     );
 
+    @GET("/areas/api/coordinador/estudiantes")
+    void getCoordinadorEstudiantes(
+            @Query("cod_coordinador")String  cod_docente,
+            Callback<JsonObject> cb
+    );
+
     @GET("/areas/api/asignaturas/estudiante")
     void getAsignaturasEstudiante(
             @Query("cod_estudiante")String cod_estudiante,

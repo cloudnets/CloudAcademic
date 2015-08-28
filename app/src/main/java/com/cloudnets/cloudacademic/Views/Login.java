@@ -75,6 +75,9 @@ public class Login extends Activity {
     //Contexto general de la aplicacion
     private Context contexto;
 
+    //Objeto para validacion
+    Perfil perfil;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -193,9 +196,10 @@ public class Login extends Activity {
         Routes ruta = restAdapter.create(Routes.class);
         ruta.login(user, pass, new Callback<Perfil>() {
             @Override
-            public void success(Perfil perfil, Response response) {
-                boolean success = perfil.isSuccess();
+            public void success(Perfil perfilResponse, Response response) {
+                boolean success = perfilResponse.isSuccess();
                 if (success) {
+                    perfil = perfilResponse;
                     guardarPerfil(perfil, url);
                     funciones.cancelarDialog();
                     iniciarSesion();
@@ -209,7 +213,7 @@ public class Login extends Activity {
             public void failure(RetrofitError error) {
                 try {
                     funciones.cancelarDialog();
-                    funciones.alertasDialog("Login(obtenerPerfil)", "Error: " + error.getBody().toString());
+                    Log.e("Login(obtenerPerfil)", "Error: " + error.getBody().toString());
                 } catch (Exception ex) {
                     Log.e("Login(obtenerPerfil)", "Error ret: " + error + "; Error ex: " + ex.getMessage());
                     methodToHandleRetrofitError(error);
@@ -243,7 +247,7 @@ public class Login extends Activity {
             public void failure(RetrofitError error) {
                 try {
                     Log.e("Login(obtenerDocentes)", "Error: " + error.getBody().toString());
-                }catch (Exception ex){
+                } catch (Exception ex) {
                     Log.e("Login(obtenerDocentes)", "Error ex: " + ex.getMessage());
                     methodToHandleRetrofitError(error);
                 }
@@ -257,6 +261,38 @@ public class Login extends Activity {
                 .build();
         Routes ruta = restAdapter.create(Routes.class);
         ruta.getEstudiantes(cod_docente, new Callback<JsonObject>() {
+            @Override
+            public void success(JsonObject jSON, Response response) {
+                String data = jSON.toString();
+                System.out.println(data);
+                try {
+                    JSONObject json = new JSONObject(data);
+                    boolean success = json.getBoolean("success");
+                    if (success) {
+                        String jsonEst = json.getString("estudiantes");
+                        JSONArray arrayData = new JSONArray(jsonEst);
+                        guardarEstudiantes(arrayData);
+                    }
+                } catch (JSONException ex) {
+                    Log.e("Login(obtenerEstudiantes)", "Json error: " + ex.getMessage());
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                funciones.cancelarDialog();
+                funciones.alertasDialog("Login(obtenerEstudiantes)", "Error: " + error.getBody().toString());
+                Log.e("Login(obtenerEstudiantes)", "Error: " + error.getBody().toString());
+            }
+        });
+    }
+
+    public void obtenerCoordinadorEstudiantes(String cod_coordinador,String url){
+        RestAdapter restAdapter = new RestAdapter.Builder()
+                .setEndpoint(url)
+                .build();
+        Routes ruta = restAdapter.create(Routes.class);
+        ruta.getEstudiantes(cod_coordinador, new Callback<JsonObject>() {
             @Override
             public void success(JsonObject jSON, Response response) {
                 String data = jSON.toString();
@@ -506,7 +542,10 @@ public class Login extends Activity {
         switch (tipoUsuario){
             case "Administrador":
                 obtenerDocentes(url);
-                obtenerEstudiantes(codigo, url);
+                break;
+            case "Coordinador":
+                obtenerDocentes(url);
+                obtenerCoordinadorEstudiantes(codigo, url);
                 obtenerCursos(codigo, url);
                 break;
             case "Docente":
