@@ -13,22 +13,52 @@
     <string name="title_activity_colegios">Colegios</string>
     <string name="colegios">Ingrese una institución</string>
     <string name="avanzar">Avanzar</string>
+    <string name="si">Si</string>
+    <string name="no">No</string>
+    <string name="asistio">Asistio</string>
+    <string name="principal">Menu</string>
+    <string name="Filtro">Filtro</string>
+    <string name="estudiantes">Lista Estudiantes</string>
+    <string name="asistencia_titulo">Asistencias</string>
+    <string name="nombre">Scarlet Johannson</string>
+    <string name="inasistencias"># de inasistencias: 4</string>
+
+    <!-- String de titulos de errores -->
+    <string name="error_1">Error de conexión.</string>
+    <string name="error_2">Error en credenciales.</string>
+    <string name="error_3">Error al validar.</string>
+    <string name="error_4">Seleccione una institución</string>
 
     <!-- String mensajes de alertas -->
     <string name="mensaje_alerta_1">No se ah detectado una conexión activa a internet,
         por favor revise el estado de su red.</string>
     <string name="mensaje_alerta_2">Los campos de las credenciales no pueden estar vacios.</string>
     <string name="mensaje_alerta_3">El usuario o la contraseña no son validos.</string>
+    <string name="mensaje_alerta_4">Antes de avanzar, primero debe seleccionar una institución de la lista de opciones.</string>
+
+    <!-- String titulos de mensajes de confirmacion -->
+    <string name="confirmacion_1">Cerrar la sesión.</string>
+
+    <!-- String mensajes de confirmación -->
+    <string name="mensaje_confirmacion_1">¿Esta seguro que desea cerrar su sesión?</string>
 
     <!-- String mensajes de información -->
     <string name="validar_1">Validando usuario</string>
     <string name="validar_2">Enviando información</string>
 
-    <!-- String de titulos de errores -->
-    <string name="error_1">Error de conexión.</string>
-    <string name="error_2">Error en credenciales.</string>
-
     <!-- String de url de conexion -->
-    <string name="url_con">http://www.cloudnets.co/cloudws</string>
-    <string name="url_test">http://192.168.1.102</string>
+    <string name="url_test">http://192.168.56.1/cloudws</string>
+    <string name="url_con">http://cloudnets.co/cloudws</string>
+
+    <!-- String descripciones iconos -->
+    <string name="icon_perfil">icon_perfil</string>
+
+    <!-- Quines somos -->
+    <string name="about">CloudNets es para todo tipo de instituciones educativas, cuenta con un
+        grupo de ingenieros y profesionales en su materia para brindar confiabilidad,
+        seguridad bajo un ambiente controlado y con soporte virtual (Chat) donde se estará en
+        comunicación con un asesor los días hábiles del año.</string>
+    <string name="title_activity_lista_estudiantes">Lista de Estudiantes</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

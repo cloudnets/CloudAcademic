@@ -4,12 +4,16 @@ import com.cloudnets.cloudacademic.Models.Estudiante;
 
 /**
  * Creado por Deimer Villa on 13/07/2015.
+ * -----------------------------------------------
+ * Clase encargada de las operaciones basicas para
+ * el manejo de datos y formatos de informacion del
+ * modelo estudiante
  */
 public class ImplementacionEstudiante {
 
     //Detalles del estudiante
     public String showDetails(Estudiante estudiante) {
-        return "Estudiante{" +
+        return "Estudiante {" + '\'' +
                 "Identificacion='" + estudiante.getIdentificacion() + '\'' +
                 ", Tipo id='" + estudiante.getTipo_id() + '\'' +
                 ", Nombre completo='" + fullName(estudiante) + '\'' +
@@ -21,6 +25,7 @@ public class ImplementacionEstudiante {
                 ", Estrato='" + estudiante.getEstrato() + '\'' +
                 ", EPS='" + estudiante.getEps() + '\'' +
                 ", Grado='" + estudiante.getNom_grado() + '\'' +
+                ", Codigo del grado='" + estudiante.getCod_grado() + '\'' +
                 '}';
     }
 

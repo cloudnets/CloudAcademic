@@ -6,12 +6,17 @@ import com.cloudnets.cloudacademic.Database.DatabaseHelper;
 import com.cloudnets.cloudacademic.Models.Estudiante;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Creado por Deimer Villa on 08/07/2015.
+ * Creado por Deimer Villa on 03/08/2015.
  * ----------------------------------------------------
  * Esta clase es la encargada de manejar las funciones
- * de la logica de los datos del modelo (estudiante)
+ * de la logica de los datos del modelo (Estudiante)
  * que se tiene que llevar a cabo por la aplicacion.
  */
 public class EstudianteController /*Clase::Controller*/{
@@ -28,7 +33,7 @@ public class EstudianteController /*Clase::Controller*/{
             estudianteDao.create(estudiante);
         } catch (Exception ex) {
             res = false;
-            Log.e("EstudianteController(crear)", "Error: " + ex.toString());
+            Log.e("EstudianteController(crear)", "Error: " + ex.getMessage());
         }
         return res;
     }
@@ -73,6 +78,22 @@ public class EstudianteController /*Clase::Controller*/{
             Log.e("EstudianteController(detalle)", "Error: " + ex.toString());
         }
         return estudiante;
+    }
+
+    //Funcion que permite la busqueda de un estudiante mediante su id
+    public List<Estudiante> listaEstudiantes(String cod_curso, Context context){
+        List<Estudiante> listaE = null;
+        try {
+            dbHelper = OpenHelperManager.getHelper(context,DatabaseHelper.class);
+            RuntimeExceptionDao<Estudiante, Integer> estudianteDao = dbHelper.getEstudianteRuntimeDao();
+            QueryBuilder<Estudiante,Integer> queryBuilder = estudianteDao.queryBuilder();
+            queryBuilder.where().eq("cod_curso",cod_curso);
+            PreparedQuery<Estudiante> preparedQuery = queryBuilder.prepare();
+            listaE = estudianteDao.query(preparedQuery);
+        } catch (Exception ex) {
+            Log.e("EstudianteController(detalle)", "Error: " + ex.toString());
+        }
+        return listaE;
     }
 
 }

@@ -6,11 +6,11 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.util.Date;
 
 /**
- * Creado por Deimer Villa on 06/07/2015.
+ * Creado por Deimer Villa on 03/08/2015.
  * ----------------------------------------------------
  * Clase modelo del objeto estudiante:
  * Esta clase usa la libreria ORMLite para manejar la relacion
- * de la clase estudiante con la tabla estudiantess en la base de datos.
+ * de la clase estudiante con la tabla estudiantes en la base de datos.
  * Cualquier atributo o propiedad del objeto estudiante, debe ser agregado
  * aqui para que este se agregue en la base de datos.
  */
@@ -20,50 +20,52 @@ public class Estudiante {
     @DatabaseField(generatedId = true)
     private int id;//LLave primaria
 
-    @DatabaseField(index = true, canBeNull = false)
+    @DatabaseField(canBeNull = false)
     private String identificacion;
     @DatabaseField(canBeNull = false)
     private String tipo_id;
-    @DatabaseField(index = true, canBeNull = false)
-    private String primer_nombre;
     @DatabaseField(canBeNull = false)
-    private String segundo_nombre;
-    @DatabaseField(index = true, canBeNull = false)
-    private String primer_apellido;
+    private String primernombre;
+    @DatabaseField(canBeNull = true)
+    private String segundonombre;
     @DatabaseField(canBeNull = false)
-    private String segundo_apellido;
+    private String primerapellido;
+    @DatabaseField(canBeNull = true)
+    private String segundoapellido;
     @DatabaseField(canBeNull = false)
-    private Date fecha_nacimiento;
+    private String fechanacimiento;
     @DatabaseField(canBeNull = false)
     private String genero;
-    @DatabaseField(canBeNull = false)
+    @DatabaseField(canBeNull = true)
     private String direccion;
-    @DatabaseField(canBeNull = false)
+    @DatabaseField(canBeNull = true)
     private String telefono;
-    @DatabaseField(canBeNull = false)
+    @DatabaseField(canBeNull = true)
     private String celular;
-    @DatabaseField(canBeNull = false)
+    @DatabaseField(canBeNull = true)
     private String estrato;
-    @DatabaseField(canBeNull = false)
+    @DatabaseField(canBeNull = true)
     private String eps;
     @DatabaseField(canBeNull = false)
     private String nom_grado;
-    @DatabaseField(index = true, canBeNull = false)
+    @DatabaseField(canBeNull = false)
     private String cod_grado;
 
-    public void Estudiante(){}
+    //Constructor de la entidad estudiante
+    public Estudiante(){}
 
-    public Estudiante(String identificacion, String tipo_id, String primer_nombre, String segundo_nombre,
-                      String primer_apellido, String segundo_apellido, Date fecha_nacimiento,
-                      String genero, String direccion, String telefono, String celular, String estrato,
-                      String eps, String nom_grado, String cod_grado) {
+    //Constructor del objeto para los datos de inicializacion
+    public Estudiante(String identificacion, String tipo_id, String primer_nombre,
+                      String segundo_nombre, String primer_apellido, String segundo_apellido,
+                      String fecha_nacimiento, String genero, String direccion, String telefono,
+                      String celular, String estrato, String eps, String nom_grado, String cod_grado) {
         this.identificacion = identificacion;
         this.tipo_id = tipo_id;
-        this.primer_nombre = primer_nombre;
-        this.segundo_nombre = segundo_nombre;
-        this.primer_apellido = primer_apellido;
-        this.segundo_apellido = segundo_apellido;
-        this.fecha_nacimiento = fecha_nacimiento;
+        this.primernombre = primer_nombre;
+        this.segundonombre = segundo_nombre;
+        this.primerapellido = primer_apellido;
+        this.segundoapellido = segundo_apellido;
+        this.fechanacimiento = fecha_nacimiento;
         this.genero = genero;
         this.direccion = direccion;
         this.telefono = telefono;
@@ -74,7 +76,7 @@ public class Estudiante {
         this.cod_grado = cod_grado;
     }
 
-    //Getters del modelo estudiante
+    //Getters del objeto estudiante
     public int getId() {
         return id;
     }
@@ -85,19 +87,19 @@ public class Estudiante {
         return tipo_id;
     }
     public String getPrimer_nombre() {
-        return primer_nombre;
+        return primernombre;
     }
     public String getSegundo_nombre() {
-        return segundo_nombre;
+        return segundonombre;
     }
     public String getPrimer_apellido() {
-        return primer_apellido;
+        return primerapellido;
     }
     public String getSegundo_apellido() {
-        return segundo_apellido;
+        return segundoapellido;
     }
-    public Date getFecha_nacimiento() {
-        return fecha_nacimiento;
+    public String getFecha_nacimiento() {
+        return fechanacimiento;
     }
     public String getGenero() {
         return genero;
@@ -124,7 +126,7 @@ public class Estudiante {
         return cod_grado;
     }
 
-    //Setters del modelo estudiante
+    //Setters del objeto estudiante
     public void setIdentificacion(String identificacion) {
         this.identificacion = identificacion;
     }
@@ -132,19 +134,19 @@ public class Estudiante {
         this.tipo_id = tipo_id;
     }
     public void setPrimer_nombre(String primer_nombre) {
-        this.primer_nombre = primer_nombre;
+        this.primernombre = primer_nombre;
     }
     public void setSegundo_nombre(String segundo_nombre) {
-        this.segundo_nombre = segundo_nombre;
+        this.segundonombre = segundo_nombre;
     }
     public void setPrimer_apellido(String primer_apellido) {
-        this.primer_apellido = primer_apellido;
+        this.primerapellido = primer_apellido;
     }
     public void setSegundo_apellido(String segundo_apellido) {
-        this.segundo_apellido = segundo_apellido;
+        this.segundoapellido = segundo_apellido;
     }
-    public void setFecha_nacimiento(Date fecha_nacimiento) {
-        this.fecha_nacimiento = fecha_nacimiento;
+    public void setFecha_nacimiento(String fecha_nacimiento) {
+        this.fechanacimiento = fecha_nacimiento;
     }
     public void setGenero(String genero) {
         this.genero = genero;
@@ -171,4 +173,25 @@ public class Estudiante {
         this.cod_grado = cod_grado;
     }
 
+    @Override
+    public String toString() {
+        return "Estudiante{" +
+                "id=" + id +
+                ", identificacion='" + identificacion + '\'' +
+                ", tipo_id='" + tipo_id + '\'' +
+                ", primer_nombre='" + primernombre + '\'' +
+                ", segundo_nombre='" + segundonombre + '\'' +
+                ", primer_apellido='" + primerapellido + '\'' +
+                ", segundo_apellido='" + segundoapellido + '\'' +
+                ", fecha_nacimiento=" + fechanacimiento +
+                ", genero='" + genero + '\'' +
+                ", direccion='" + direccion + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", celular='" + celular + '\'' +
+                ", estrato='" + estrato + '\'' +
+                ", eps='" + eps + '\'' +
+                ", nom_grado='" + nom_grado + '\'' +
+                ", cod_grado='" + cod_grado + '\'' +
+                '}';
+    }
 }

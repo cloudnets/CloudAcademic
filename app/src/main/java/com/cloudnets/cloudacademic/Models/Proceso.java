@@ -1,34 +1,34 @@
 package com.cloudnets.cloudacademic.Models;
 
 /**
- * Created by USER on 01/07/2015.
+ * Creado por Deimer Villa on 03/08/2015.
  */
 public class Proceso {
 
-    /*************Atributos del objeto resultado*************/
-    boolean resultado = false;
-    String titulo = "";
-    String mensaje = "";
+/*************Atributos del objeto resultado*************/
+    String title = "";
+    String message = "";
+    boolean success = false;
 
-    /*********Getters y Setters del objeto resultado*********/
-    public boolean isResultado() {
-        return resultado;
+/*********Getters del objeto resultado*********/
+    public String getTitle() {
+        return title;
     }
-    public void setResultado(boolean resultado) {
-        this.resultado = resultado;
+    public String getMessage() {
+        return message;
     }
-    public String getTitulo() {
-        return titulo;
-    }
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-    public String getMensaje() {
-        return mensaje;
-    }
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
+    public boolean isSuccess() {
+        return success;
     }
 
+/*********Setters del objeto resultado*********/
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    public void setMessage(String message) {
+        this.message = message;
+    }
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
 }
-

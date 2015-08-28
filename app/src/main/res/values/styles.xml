@@ -10,6 +10,20 @@
     <style name="StartTheme" parent="android:Theme.Holo.Light.NoActionBar.Fullscreen">
     </style>
     <style name="Background" parent="android:Theme.Holo.Light.NoActionBar.Fullscreen">
-        <item name="android:background">@drawable/fondo</item>
+        <item name="android:background">@color/primary_color</item>
     </style>
+
+    <style name="MaterialTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:colorPrimary">@color/primary_color</item>
+        <item name="android:colorPrimaryDark">@color/primary_dark_color</item>
+        <item name="android:colorAccent">@color/accent_color</item>
+    </style>
+
+    <style name="Widget.MyApp.HeaderBar.Spinner" parent="Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
+        <item name="android:background">?android:selectableItemBackground</item>
+        <item name="android:dropDownSelector">?android:selectableItemBackground</item>
+        <item name="android:divider">@null</item>
+        <item name="android:overlapAnchor">true</item>
+    </style>
+
 </resources>

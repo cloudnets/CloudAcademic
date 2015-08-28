@@ -1,63 +1,82 @@
 package com.cloudnets.cloudacademic.Views;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.ImageButton;
-import com.cloudnets.cloudacademic.Models.Institucion;
-import com.cloudnets.cloudacademic.R;
+import android.widget.Spinner;
 
+import com.cloudnets.cloudacademic.Helpers.Funciones;
+import com.cloudnets.cloudacademic.R;
 import java.util.ArrayList;
 
 public class Colegios extends Activity {
 
-    private AutoCompleteTextView txtColegios;
-    private ImageButton butBuscar;
-    private Button butAvanzar;
+    //Elementos de la vista
+    public Spinner spColegios;
+    public Button butAvanzar;
+    public String institucion = "";
+
+    //Clase de funciones varias
+    private Funciones funciones = new Funciones(this);
+
+    //Contexto general de la aplicacion
+    private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_colegios);
         inicializarElementosVista();
-        agregarColegios();
+        listarColegios();
+        inicializarContexto();
+    }
+
+    public void inicializarContexto(){
+        funciones = new Funciones(context);
     }
 
     public void inicializarElementosVista(){
-        txtColegios = (AutoCompleteTextView) findViewById(R.id.txtColegios);
-        butBuscar = (ImageButton) findViewById(R.id.butBuscar);
-        butBuscar.setOnClickListener(new View.OnClickListener() {
+        spColegios = (Spinner) findViewById(R.id.spColegios);
+        spColegios.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                //
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                institucion = spColegios.getSelectedItem().toString();
+            }@Override
+            public void onNothingSelected(AdapterView<?> parent) {
             }
         });
         butAvanzar = (Button) findViewById(R.id.butAvanzar);
         butAvanzar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //
+                avanzar();
             }
         });
     }
 
-    public void agregarColegios(){
-        Institucion col1 = new Institucion("Royal School");
-        Institucion col2 = new Institucion("Liceo de Cervantes");
-        ArrayList<String> listaColegios = new ArrayList<String>();
-        listaColegios.add(col1.getNombre());
-        listaColegios.add(col2.getNombre());
-        ArrayAdapter<String> lista = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listaColegios);
-        txtColegios.setAdapter(lista);
+    public void listarColegios(){
+        ArrayList<String> listaColegios = new ArrayList<>();
+        listaColegios.add("Seleccione una institucion");
+        listaColegios.add("Royal School");
+        listaColegios.add("Liceo de Cervantes");
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,listaColegios);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spColegios.setAdapter(arrayAdapter);
     }
 
     public void avanzar(){
-        String colegios = txtColegios.getText().toString();
-        if(colegios.equalsIgnoreCase("")){
-
+        String colegioSel;
+        colegioSel = spColegios.getSelectedItem().toString();
+        if(!colegioSel.equalsIgnoreCase("Seleccione una institucion")){
+            Intent login = new Intent(Colegios.this,Login.class);
+            startActivity(login);
+        }else{
+            funciones.alertasDialog(getString(R.string.error_4),getString(R.string.mensaje_alerta_4));
         }
     }
 

@@ -7,6 +7,12 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- Permiso para obtener el IMEI identificador del dispositivo -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- Permisos para manejar las notificaciones -->
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <application
         android:allowBackup="true"
@@ -42,11 +48,32 @@
             android:name=".Views.Principal"
             android:label="@string/title_principal"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/MaterialTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
+        <!-- Actividad de la seleccion de colegios -->
         <activity
             android:name=".Views.Colegios"
-            android:label="@string/title_activity_colegios" >
+            android:label="@string/title_activity_colegios"
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- Actividad de la lista de estudiantes -->
+        <activity
+            android:name=".Views.ListaEstudiantes"
+            android:label="@string/title_activity_lista_estudiantes"
+            android:theme="@style/MaterialTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
     </application>
 
