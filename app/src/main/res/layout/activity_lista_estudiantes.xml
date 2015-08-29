@@ -30,7 +30,7 @@
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:id="@+id/iconMenuPrincipal"
+                    android:id="@+id/iconRegresarMenu"
                     android:src="@drawable/titulo"
                     android:contentDescription="@string/icon_perfil"
                     android:background="#001e6893"
@@ -58,26 +58,23 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:id="@+id/lblTipoUsuario"
-                        android:layout_gravity="center_horizontal" />
+                        android:id="@+id/lblTipoUsuarioLista"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:id="@+id/lblNombres" />
+                        android:id="@+id/lblNombresLista"
+                        android:gravity="center" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:id="@+id/lblApellidos" />
                 </LinearLayout>
 
                 <ImageButton
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:id="@+id/iconoPerfil"
+                    android:id="@+id/iconoDatosPerfil"
                     android:contentDescription="@string/icon_perfil"
                     android:background="#001e6893"
                     android:src="@drawable/user"
@@ -107,7 +104,8 @@
                 android:id="@+id/lblTitulo"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/Filtro"
-                android:paddingTop="5dp" />
+                android:paddingTop="5dp"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -128,8 +126,12 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/contenedor_lista"
-            android:background="#4697c6">
+            android:id="@+id/contenedor_lista">
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:id="@+id/recycler" />
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -147,20 +149,19 @@
                     card_view:cardElevation="10dp"
                     card_view:cardCornerRadius="6dp"
                     card_view:cardBackgroundColor="#ffffff"
-                    android:id="@+id/cvEst1">
+                    android:id="@+id/card_est1">
 
-                    <LinearLayout
-                        android:orientation="horizontal"
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/contenedor_info_estudiante"
-                        android:padding="7dp">
+                        android:id="@+id/contenedor_info_est1"
+                        android:padding="10dp">
 
                         <de.hdodenhof.circleimageview.CircleImageView
                             xmlns:app="http://schemas.android.com/apk/res-auto"
                             android:id="@+id/imgEstudiante"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
                             android:src="@drawable/kathe"
                             app:border_width="4dp"
                             app:border_color="#ffffff"
@@ -169,48 +170,47 @@
                         <LinearLayout
                             android:orientation="vertical"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/contenedor_detalle"
-                            android:layout_gravity="center_vertical"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp">
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/imgEstudiante"
+                            android:layout_toEndOf="@+id/imgEstudiante"
+                            android:paddingLeft="10dp">
+
                             <TextView
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/lblNombreEst"
-                                android:textSize="20sp"
+                                android:textSize="30sp"
                                 android:text="@string/nombre"
-                                android:textColor="#666666" />
+                                android:textColor="#666666"
+                                android:layout_gravity="center" />
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:id="@+id/lblInasistencias"
+                                android:textSize="15sp"
                                 android:text="@string/inasistencias"
-                                android:textColor="#666666" />
+                                android:textColor="#666666"/>
 
-                            <LinearLayout
-                                android:orientation="vertical"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:paddingRight="30dp">
-
-                                <Switch
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/switch1"
-                                    android:textColor="#ff2384bb"
-                                    android:checked="true"
-                                    android:layout_gravity="right"
-                                    android:paddingLeft="10dp" />
-                            </LinearLayout>
+                            <Switch
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/switch1"
+                                android:textColor="#ff2384bb"
+                                android:checked="true"
+                                android:layout_gravity="center"
+                                android:paddingLeft="10dp" />
 
                         </LinearLayout>
 
-                    </LinearLayout>
+                    </RelativeLayout>
 
                 </android.support.v7.widget.CardView>
 
             </ScrollView>
+
         </LinearLayout>
 
     </LinearLayout>

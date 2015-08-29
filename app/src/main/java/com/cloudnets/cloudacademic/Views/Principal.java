@@ -33,7 +33,8 @@ import com.cloudnets.cloudacademic.R;
 public class Principal extends Activity {
 
     //Elementos de la vista
-    private TextView lblNombres;
+    private TextView lblFullName;
+    private TextView lblTipoUsuario;
     ImageButton iconMenuPrincipal;
     ImageButton iconMenuPerfil;
     LinearLayout contenedorCardMenu1;
@@ -43,6 +44,8 @@ public class Principal extends Activity {
     private Funciones funciones;
     //Contexto general de la aplicacion
     private Context contexto;
+    //ID usuario actvio
+    int id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +53,14 @@ public class Principal extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_principal);
+        idUser();
         inicializarContexto();
         inicializarElementosPrincipal();
+    }
+
+    public void idUser(){
+        Bundle b = getIntent().getExtras();
+        id = b.getInt("id");
     }
 
     public void inicializarContexto(){
@@ -63,9 +72,12 @@ public class Principal extends Activity {
 
     public void inicializarElementosPrincipal(){
         //Etiquetas
-        lblNombres = (TextView) findViewById(R.id.lblNombres);
-        lblNombres.setTextColor(Color.WHITE);
-        lblNombres.setTextSize(16);
+        lblFullName = (TextView) findViewById(R.id.lblNombres);
+        lblFullName.setTextColor(Color.WHITE);
+        lblFullName.setTextSize(13);
+        lblTipoUsuario = (TextView) findViewById(R.id.lblTipoUsuario);
+        lblTipoUsuario.setTextColor(Color.WHITE);
+        lblTipoUsuario.setTextSize(13);
         //Layouts
         contenedorCardMenu1 = (LinearLayout) findViewById(R.id.contenedor_card_menu_1);
         contenedorCardMenu1.setOnClickListener(new View.OnClickListener() {
@@ -86,7 +98,7 @@ public class Principal extends Activity {
         iconMenuPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Perfil perfil = perfilController.detalle(1, contexto);
+                Perfil perfil = perfilController.detalle(id,contexto);
                 funciones.alertasDialog("Info perfil", iP.mostrarDetalles(perfil));
             }
         });
@@ -95,11 +107,11 @@ public class Principal extends Activity {
 
     public void cargarDatoPerfil(){
         try {
-            Perfil perfil = perfilController.detalle(1, this.getApplicationContext());
+            Perfil perfil = perfilController.detalle(id,this.getApplicationContext());
             String nombres = perfil.getNombres();
-            String[] cadena = nombres.split(" ");
-            String p_nombre = cadena[0];
-            lblNombres.setText(p_nombre);
+            String tipoUsuario = perfil.getTipoUsuario();
+            lblFullName.setText(nombres);
+            lblTipoUsuario.setText(tipoUsuario);
         }catch (Exception ex){
             Log.e("Principal(cargarDatosPerfil)","Error: "+ex.getMessage());
         }
@@ -107,30 +119,30 @@ public class Principal extends Activity {
 
     /************************Funciones de los iconos************************/
     public void mensajeCerrar(){
-        //AlertDialog.Builder dialogoCerrar = new AlertDialog.Builder(this);
-        //dialogoCerrar.setTitle(getString(R.string.confirmacion_1));
-        //dialogoCerrar.setMessage(getString(R.string.mensaje_confirmacion_1));
-        //dialogoCerrar.setCancelable(false);
-        //dialogoCerrar.setPositiveButton(getString(R.string.si), new DialogInterface.OnClickListener() {
-        //    @Override
-        //    public void onClick(DialogInterface dialog, int which){
-        //        try{
-        //            boolean res = perfilController.cerrarSesion(contexto);
-        //            if(res){
-        //                cerrarSesion();
-        //            }
-        //        }catch (Throwable e){
-        //            e.printStackTrace();
-        //        }
-        //    }
-        //});
-        //dialogoCerrar.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
-        //    @Override
-        //    public void onClick(DialogInterface dialog, int which) {
-        //        dialog.cancel();
-        //    }
-        //});
-        //dialogoCerrar.show();
+        AlertDialog.Builder dialogoCerrar = new AlertDialog.Builder(this);
+        dialogoCerrar.setTitle(getString(R.string.confirmacion_1));
+        dialogoCerrar.setMessage(getString(R.string.mensaje_confirmacion_1));
+        dialogoCerrar.setCancelable(false);
+        dialogoCerrar.setPositiveButton(getString(R.string.si), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which){
+                try{
+                    boolean res = perfilController.cerrarSesion(id,contexto);
+                    if(res){
+                        cerrarSesion();
+                    }
+                }catch (Throwable e){
+                    e.printStackTrace();
+                }
+            }
+        });
+        dialogoCerrar.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        dialogoCerrar.show();
     }
 
     @Override
@@ -151,8 +163,9 @@ public class Principal extends Activity {
     }
 
     public void listaEstudiantes(){
-        Intent login = new Intent(Principal.this,ListaEstudiantes.class);
-        startActivity(login);
+        Intent lista = new Intent(Principal.this,ListaEstudiantes.class);
+        lista.putExtra("id", id);
+        startActivity(lista);
         overridePendingTransition(R.anim.left_in,R.anim.left_out);
         finish();
     }

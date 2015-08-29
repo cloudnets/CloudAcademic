@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 import com.cloudnets.cloudacademic.Controllers.*;
 import com.cloudnets.cloudacademic.Implementacion.ImplementacionPerfil;
+import com.cloudnets.cloudacademic.Models.Perfil;
 import com.cloudnets.cloudacademic.R;
 
 /**
@@ -51,7 +52,7 @@ public class Inicio extends Activity {
             // El nuevo Thread exige el metodo run
             public void run() {
                 try {
-                    sleep(6000);
+                    sleep(5000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
@@ -65,7 +66,10 @@ public class Inicio extends Activity {
     public void haySesionActiva(){
         boolean sesionActiva = perfilController.sesionActiva(contexto);
         if(sesionActiva){
+            PerfilController perfilController = new PerfilController();
+            Perfil perfil = perfilController.buscarPerfil(contexto);
             Intent principal = new Intent(Inicio.this,Principal.class);
+            principal.putExtra("id", perfil.getId());
             startActivity(principal);
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             finish();

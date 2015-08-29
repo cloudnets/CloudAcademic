@@ -10,19 +10,19 @@ public class ImplementacionPerfil {
     //Funcion que devuelve los detalles del usuario en formato string
     public String mostrarDetalles(Perfil perfil) {
         return "Perfil{" +
-                "Username='" + perfil.getUsuario() + '\'' +
-                ", Identificacion='" + perfil.getIdentificacion() + '\'' +
-                ", Nombre completo='" + nombreCompleto(perfil) + '\'' +
-                ", Email='" + perfil.getEmail() + '\'' +
-                ", Perfil='" + perfil.getPerfil() + '\'' +
-                ", Tipo usuario='" + perfil.getTipoUsuario() + '\'' +
-                ", success='" + perfil.isSuccess() + '\'' +
-                '}';
+            "Username='" + perfil.getUsuario() + '\'' +
+            ", Identificacion='" + perfil.getIdentificacion() + '\'' +
+            ", Nombre completo='" + nombreCompleto(perfil) + '\'' +
+            ", Email='" + perfil.getEmail() + '\'' +
+            ", Perfil='" + perfil.getPerfil() + '\'' +
+            ", Tipo usuario='" + perfil.getTipoUsuario() + '\'' +
+            ", success='" + perfil.isSuccess() + '\'' +
+        '}';
     }
 
     //Funcion que devuelve el nombre completo del usuario
     public String nombreCompleto(Perfil perfil){
-        return perfil.getNombres()+' '+perfil.getApellidos();
+        return perfil.getNombres()+'\n'+perfil.getApellidos();
     }
 
     //Funcion que valida si la contrasena ingresada es la correcta

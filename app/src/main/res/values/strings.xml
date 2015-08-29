@@ -11,15 +11,20 @@
     <string name="titulo">Cloud Academic</string>
     <string name="sia">Sistema Integral Acádemico en la Nube</string>
     <string name="title_activity_colegios">Colegios</string>
-    <string name="colegios">Ingrese una institución</string>
     <string name="avanzar">Avanzar</string>
     <string name="si">Si</string>
     <string name="no">No</string>
     <string name="asistio">Asistio</string>
-    <string name="principal">Menu</string>
-    <string name="Filtro">Filtro</string>
+
+    <!-- String de titulos de menus -->
     <string name="estudiantes">Lista Estudiantes</string>
     <string name="asistencia_titulo">Asistencias</string>
+    <string name="agenda_titulo">Agenda</string>
+    <string name="principal">Menu</string>
+    <string name="Filtro">Filtro</string>
+    <string name="colegios">Ingrese una institución</string>
+
+    <!-- String de textos de objetos -->
     <string name="nombre">Scarlet Johannson</string>
     <string name="inasistencias"># de inasistencias: 4</string>
 

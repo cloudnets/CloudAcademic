@@ -3,44 +3,36 @@ package com.cloudnets.cloudacademic.Views;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.animation.*;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.cloudnets.cloudacademic.Controllers.AsignaturaController;
-import com.cloudnets.cloudacademic.Controllers.CursoController;
-import com.cloudnets.cloudacademic.Controllers.DocenteController;
-import com.cloudnets.cloudacademic.Controllers.EstudianteController;
-import com.cloudnets.cloudacademic.Controllers.PerfilController;
+import com.cloudnets.cloudacademic.Controllers.*;
 import com.cloudnets.cloudacademic.Helpers.Funciones;
-import com.cloudnets.cloudacademic.Implementacion.ImplementacionAsignatura;
-import com.cloudnets.cloudacademic.Implementacion.ImplementacionCurso;
-import com.cloudnets.cloudacademic.Implementacion.ImplementacionDocente;
-import com.cloudnets.cloudacademic.Implementacion.ImplementacionEstudiante;
-import com.cloudnets.cloudacademic.Models.Asignatura;
-import com.cloudnets.cloudacademic.Models.Curso;
-import com.cloudnets.cloudacademic.Models.Docente;
-import com.cloudnets.cloudacademic.Models.Estudiante;
-import com.cloudnets.cloudacademic.Models.Perfil;
+import com.cloudnets.cloudacademic.Implementacion.*;
+import com.cloudnets.cloudacademic.Models.*;
 import com.cloudnets.cloudacademic.R;
-import com.cloudnets.cloudacademic.ApiService.Routes;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import com.loopj.android.http.HttpGet;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.json.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Creado por Deimer Villa on 29/06/2015.
@@ -64,7 +56,7 @@ public class Login extends Activity {
     //Variables de valores para peticiones
     String user = "";
     String pass = "";
-    String institucion = "";
+    Perfil perfil;
 
     //Controlador del modelo entidad perfil
     private PerfilController perfilController;
@@ -74,9 +66,6 @@ public class Login extends Activity {
     private AsignaturaController asignaturaController;
     //Contexto general de la aplicacion
     private Context contexto;
-
-    //Objeto para validacion
-    Perfil perfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,240 +165,9 @@ public class Login extends Activity {
             funciones.alertasDialog(getString(R.string.error_2),
                     getString(R.string.mensaje_alerta_2));
         }else{
-            obtenerPerfil();
+            //obtenerPerfil();
+            iniciarSesion2();
         }
-    }
-
-    public void methodToHandleRetrofitError(RetrofitError error) {
-        Log.e("Login(obtenerPerfil)", "Error: " + error.getMessage());
-        Log.e("Login(obtenerPerfil)", "Response: " + error.getResponse());
-    }
-
-    public void obtenerPerfil(){
-        funciones.alertasAsincronicas(getString(R.string.validar_1), getString(R.string.validar_2));
-        final String url = getString(R.string.url_con);
-        user = txtUsuario.getText().toString();
-        pass = txtContrasena.getText().toString();
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(url)
-                .build();
-        Routes ruta = restAdapter.create(Routes.class);
-        ruta.login(user, pass, new Callback<Perfil>() {
-            @Override
-            public void success(Perfil perfilResponse, Response response) {
-                boolean success = perfilResponse.isSuccess();
-                if (success) {
-                    perfil = perfilResponse;
-                    guardarPerfil(perfil, url);
-                    funciones.cancelarDialog();
-                    iniciarSesion();
-                } else {
-                    funciones.cancelarDialog();
-                    funciones.alertasDialog("", getString(R.string.mensaje_alerta_3));
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                try {
-                    funciones.cancelarDialog();
-                    Log.e("Login(obtenerPerfil)", "Error: " + error.getBody().toString());
-                } catch (Exception ex) {
-                    Log.e("Login(obtenerPerfil)", "Error ret: " + error + "; Error ex: " + ex.getMessage());
-                    methodToHandleRetrofitError(error);
-                }
-            }
-        });
-    }
-
-    public void obtenerDocentes(String url){
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(url)
-                .build();
-        Routes ruta = restAdapter.create(Routes.class);
-        ruta.getDocentes(new Callback<JsonObject>() {
-            @Override
-            public void success(JsonObject jSON, Response response) {
-                String data = jSON.toString();
-                try {
-                    JSONObject json = new JSONObject(data);
-                    boolean success = json.getBoolean("success");
-                    if (success) {
-                        JSONArray arrayData = json.getJSONArray("docentes");
-                        guardarDocentes(arrayData);
-                    }
-                } catch (JSONException ex) {
-                    Log.e("Login(obtenerDocentes)", "Json error: " + ex.getMessage());
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                try {
-                    Log.e("Login(obtenerDocentes)", "Error: " + error.getBody().toString());
-                } catch (Exception ex) {
-                    Log.e("Login(obtenerDocentes)", "Error ex: " + ex.getMessage());
-                    methodToHandleRetrofitError(error);
-                }
-            }
-        });
-    }
-
-    public void obtenerEstudiantes(String cod_docente,String url){
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(url)
-                .build();
-        Routes ruta = restAdapter.create(Routes.class);
-        ruta.getEstudiantes(cod_docente, new Callback<JsonObject>() {
-            @Override
-            public void success(JsonObject jSON, Response response) {
-                String data = jSON.toString();
-                System.out.println(data);
-                try {
-                    JSONObject json = new JSONObject(data);
-                    boolean success = json.getBoolean("success");
-                    if (success) {
-                        String jsonEst = json.getString("estudiantes");
-                        JSONArray arrayData = new JSONArray(jsonEst);
-                        guardarEstudiantes(arrayData);
-                    }
-                } catch (JSONException ex) {
-                    Log.e("Login(obtenerEstudiantes)", "Json error: " + ex.getMessage());
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                funciones.cancelarDialog();
-                funciones.alertasDialog("Login(obtenerEstudiantes)", "Error: " + error.getBody().toString());
-                Log.e("Login(obtenerEstudiantes)", "Error: " + error.getBody().toString());
-            }
-        });
-    }
-
-    public void obtenerCoordinadorEstudiantes(String cod_coordinador,String url){
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(url)
-                .build();
-        Routes ruta = restAdapter.create(Routes.class);
-        ruta.getEstudiantes(cod_coordinador, new Callback<JsonObject>() {
-            @Override
-            public void success(JsonObject jSON, Response response) {
-                String data = jSON.toString();
-                System.out.println(data);
-                try {
-                    JSONObject json = new JSONObject(data);
-                    boolean success = json.getBoolean("success");
-                    if (success) {
-                        String jsonEst = json.getString("estudiantes");
-                        JSONArray arrayData = new JSONArray(jsonEst);
-                        guardarEstudiantes(arrayData);
-                    }
-                } catch (JSONException ex) {
-                    Log.e("Login(obtenerEstudiantes)", "Json error: " + ex.getMessage());
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                funciones.cancelarDialog();
-                funciones.alertasDialog("Login(obtenerEstudiantes)", "Error: " + error.getBody().toString());
-                Log.e("Login(obtenerEstudiantes)", "Error: " + error.getBody().toString());
-            }
-        });
-    }
-
-    public void obtenerCursos(String cod_docente,String url){
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(url)
-                .build();
-        Routes ruta = restAdapter.create(Routes.class);
-        ruta.getCursos(cod_docente, new Callback<JsonObject>() {
-            @Override
-            public void success(JsonObject jSON, Response response) {
-                String data = jSON.toString();
-                try {
-                    JSONObject json = new JSONObject(data);
-                    boolean success = json.getBoolean("success");
-                    if (success) {
-                        String jsonCur = json.getString("cursos");
-                        JSONArray arrayData = new JSONArray(jsonCur);
-                        guardarCursos(arrayData);
-                    }
-                } catch (JSONException ex) {
-                    Log.e("Login(obtenerCursos)", "Error: " + ex.getMessage());
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                funciones.cancelarDialog();
-                funciones.alertasDialog("Login(obtenerCursos)", "Error: " + error.getBody().toString());
-                Log.e("Login(obtenerCursos)", "Error: " + error.getBody().toString());
-            }
-        });
-    }
-
-    public void obtenerAsignaturasDocente(String url, String cod_docente){
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(url)
-                .build();
-        Routes ruta = restAdapter.create(Routes.class);
-        ruta.getAsignaturasDocente(cod_docente, new Callback<JsonObject>() {
-            @Override
-            public void success(JsonObject jSON, Response response) {
-                String data = jSON.toString();
-                try {
-                    JSONObject json = new JSONObject(data);
-                    boolean success = json.getBoolean("success");
-                    if (success) {
-                        String jsonAsig = json.getString("asignaturas");
-                        JSONArray arrayData = new JSONArray(jsonAsig);
-                        guardarAsignaturasDocente(arrayData);
-                    }
-                } catch (JSONException ex) {
-                    Log.e("Login(obtenerAsignaturasDocente)", "Error: " + ex.getMessage());
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                funciones.cancelarDialog();
-                funciones.alertasDialog("Login(obtenerAsignaturasDocente)", "Error: " + error.getBody().toString());
-                Log.e("Login(obtenerAsignaturasDocente)", "Error: " + error.getBody().toString());
-            }
-        });
-    }
-
-    public void obtenerAsignaturasEstudiante(String cod_estudiante, String url){
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(url)
-                .build();
-        Routes ruta = restAdapter.create(Routes.class);
-        ruta.getAsignaturasEstudiante(cod_estudiante, new Callback<JsonObject>() {
-            @Override
-            public void success(JsonObject jSON, Response response) {
-                String data = jSON.toString();
-                try {
-                    JSONObject json = new JSONObject(data);
-                    boolean success = json.getBoolean("success");
-                    if (success) {
-                        String jsonAsig = json.getString("asignaturas");
-                        JSONArray arrayData = new JSONArray(jsonAsig);
-                        guardarAsignaturasEstudiante(arrayData);
-                    }
-                } catch (JSONException ex) {
-                    Log.e("Login(obtenerAsignaturasEstudiante)", "Error: " + ex.getMessage());
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                funciones.cancelarDialog();
-                funciones.alertasDialog("Login(obtenerAsignaturasDocente)", "Error: " + error.getBody().toString());
-                Log.e("Login(obtenerAsignaturasDocente)", "Error: " + error.getBody().toString());
-            }
-        });
     }
 
     /***************Procesos de almacenado***************/
@@ -559,9 +317,211 @@ public class Login extends Activity {
         }
     }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////
+    public Boolean login(String user, String pass, String ipURL){
+        boolean res = false;
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost postLogin = new HttpPost(ipURL+"/areas/api/perfil");
+        try{
+            List<NameValuePair> parametros = new ArrayList<>();
+            parametros.add(new BasicNameValuePair("user", user));
+            parametros.add(new BasicNameValuePair("pass", pass));
+            postLogin.setEntity(new UrlEncodedFormEntity(parametros));
+            HttpResponse resp = httpClient.execute(postLogin);
+            String response = EntityUtils.toString(resp.getEntity());
+            try {
+                JSONObject json = new JSONObject(response);
+                boolean success = json.getBoolean("success");
+                if(success){
+                    perfil = new Gson().fromJson(json.toString(), Perfil.class);
+                    res = perfilController.crear(perfil, contexto);
+                    if(res){
+                        cargarConfiguracion(perfil,ipURL);
+                    }
+                }
+            } catch (JSONException e) {
+                Log.i("ImplementacionLogin(Login)", "Error JSONException: " + e.toString());
+            }
+        }catch(Exception e){
+            Log.i("ImplementacionLogin(Login)","Error Exception: "+e.toString());
+        }
+        return res;
+    }
+
+    public Boolean obtenerDocentes(String ipURL){
+        boolean res = false;
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpGet getDocentes = new HttpGet(ipURL+"/areas/api/docentes");
+        getDocentes.setHeader("content-type", "application/json");
+        try{
+            HttpResponse resp = httpClient.execute(getDocentes);
+            String response = EntityUtils.toString(resp.getEntity());
+            try {
+                JSONObject json = new JSONObject(response);
+                boolean success = json.getBoolean("success");
+                if(success){
+                    JSONArray arrayData = json.getJSONArray("docentes");
+                    res = guardarDocentes(arrayData);
+                }
+            } catch (JSONException e) {
+                Log.i("ImplementacionLogin(Login)", "Error JSONException: " + e.toString());
+            }
+        }catch(Exception e){
+            Log.i("ImplementacionLogin(Login)","Error Exception: "+e.toString());
+        }
+        return res;
+    }
+
+    public Boolean obtenerEstudiantes(String cod_docente, String ipURL){
+        boolean res = false;
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpGet getEstudiantes = new HttpGet(ipURL+"/areas/api/estudiantes?cod_docente="+cod_docente);
+        getEstudiantes.setHeader("content-type", "application/json");
+        try{
+            HttpResponse resp = httpClient.execute(getEstudiantes);
+            String response = EntityUtils.toString(resp.getEntity());
+            try {
+                JSONObject json = new JSONObject(response);
+                boolean success = json.getBoolean("success");
+                if(success){
+                    JSONArray arrayData = json.getJSONArray("estudiantes");
+                    res = guardarEstudiantes(arrayData);
+                }
+            } catch (JSONException e) {
+                Log.i("ImplementacionLogin(Login)", "Error JSONException: " + e.toString());
+            }
+        }catch(Exception e){
+            Log.i("ImplementacionLogin(Login)","Error Exception: "+e.toString());
+        }
+        return res;
+    }
+
+    public Boolean obtenerCoordinadorEstudiantes(String cod_coordinador, String ipURL){
+        boolean res = false;
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpGet getEstudiantes = new HttpGet(ipURL+"/areas/api/coordinador/estudiantes?cod_coordinador="+cod_coordinador);
+        getEstudiantes.setHeader("content-type", "application/json");
+        try{
+            HttpResponse resp = httpClient.execute(getEstudiantes);
+            String response = EntityUtils.toString(resp.getEntity());
+            try {
+                JSONObject json = new JSONObject(response);
+                boolean success = json.getBoolean("success");
+                if(success){
+                    JSONArray arrayData = json.getJSONArray("estudiantes");
+                    res = guardarEstudiantes(arrayData);
+                }
+            } catch (JSONException e) {
+                Log.i("Login(obtenerCoordinadorEstudiantes)", "Error JSONException: " + e.toString());
+            }
+        }catch(Exception e){
+            Log.i("Login(obtenerCoordinadorEstudiantes)","Error Exception: "+e.toString());
+        }
+        return res;
+    }
+
+    public Boolean obtenerCursos(String cod_docente, String ipURL){
+        boolean res = false;
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpGet getCursos = new HttpGet(ipURL+"/areas/api/cursos?cod_docente="+cod_docente);
+        getCursos.setHeader("content-type", "application/json");
+        try{
+            HttpResponse resp = httpClient.execute(getCursos);
+            String response = EntityUtils.toString(resp.getEntity());
+            try {
+                JSONObject json = new JSONObject(response);
+                boolean success = json.getBoolean("success");
+                if(success){
+                    JSONArray arrayData = json.getJSONArray("cursos");
+                    res = guardarEstudiantes(arrayData);
+                }
+            } catch (JSONException e) {
+                Log.i("Login(obtenerCursos)", "Error JSONException: " + e.toString());
+            }
+        }catch(Exception e){
+            Log.i("Login(obtenerCursos)","Error Exception: "+e.toString());
+        }
+        return res;
+    }
+
+    public Boolean obtenerAsignaturasDocente(String cod_docente, String ipURL){
+        boolean res = false;
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpGet getCursos = new HttpGet(ipURL+"/areas/api/asignaturas/docente?cod_docente="+cod_docente);
+        getCursos.setHeader("content-type", "application/json");
+        try{
+            HttpResponse resp = httpClient.execute(getCursos);
+            String response = EntityUtils.toString(resp.getEntity());
+            try {
+                JSONObject json = new JSONObject(response);
+                boolean success = json.getBoolean("success");
+                if(success){
+                    JSONArray arrayData = json.getJSONArray("asignaturas");
+                    res = guardarAsignaturasDocente(arrayData);
+                }
+            } catch (JSONException e) {
+                Log.i("Login(obtenerAsignaturasDocente)", "Error JSONException: " + e.toString());
+            }
+        }catch(Exception e){
+            Log.i("Login(obtenerAsignaturasDocente)","Error Exception: "+e.toString());
+        }
+        return res;
+    }
+
+    public Boolean obtenerAsignaturasEstudiante(String cod_estudiante, String ipURL){
+        boolean res = false;
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpGet getCursos = new HttpGet(ipURL+"/areas/api/asignaturas/docente?cod_estudiante="+cod_estudiante);
+        getCursos.setHeader("content-type", "application/json");
+        try{
+            HttpResponse resp = httpClient.execute(getCursos);
+            String response = EntityUtils.toString(resp.getEntity());
+            try {
+                JSONObject json = new JSONObject(response);
+                boolean success = json.getBoolean("success");
+                if(success){
+                    JSONArray arrayData = json.getJSONArray("asignaturas");
+                    res = guardarAsignaturasEstudiante(arrayData);
+                }
+            } catch (JSONException e) {
+                Log.i("Login(obtenerAsignaturasEstudiante)", "Error JSONException: " + e.toString());
+            }
+        }catch(Exception e){
+            Log.i("Login(obtenerAsignaturasEstudiante)","Error Exception: "+e.toString());
+        }
+        return res;
+    }
+
+    public void iniciarSesion2(){
+        user = txtUsuario.getText().toString();
+        pass = txtContrasena.getText().toString();
+        login logout = new login();
+        logout.execute();
+    }
+    private class login extends AsyncTask<String, Integer, Boolean> {
+        protected void onPreExecute(){
+            funciones.alertasAsincronicas(getString(R.string.validar_1), getString(R.string.validar_2));
+        }
+        protected Boolean doInBackground(String... params) {
+            boolean res;
+            final String url = getString(R.string.url_con);
+            res = login(user, pass, url);
+            return res;
+        }
+        public void onPostExecute(Boolean resul){
+            funciones.cancelarDialog();
+            if(resul){
+                funciones.cancelarDialog();
+                iniciarSesion();
+            }else{
+                funciones.alertasDialog("", getString(R.string.mensaje_alerta_3));
+            }
+        }
+    }
+
     public void iniciarSesion(){
         Intent login = new Intent(Login.this,Principal.class);
-        login.putExtra("institucion", institucion);
+        login.putExtra("id", perfil.getId());
         startActivity(login);
     }
 

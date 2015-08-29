@@ -176,22 +176,22 @@ public class Estudiante {
     @Override
     public String toString() {
         return "Estudiante{" +
-                "id=" + id +
-                ", identificacion='" + identificacion + '\'' +
-                ", tipo_id='" + tipo_id + '\'' +
-                ", primer_nombre='" + primernombre + '\'' +
-                ", segundo_nombre='" + segundonombre + '\'' +
-                ", primer_apellido='" + primerapellido + '\'' +
-                ", segundo_apellido='" + segundoapellido + '\'' +
-                ", fecha_nacimiento=" + fechanacimiento +
-                ", genero='" + genero + '\'' +
-                ", direccion='" + direccion + '\'' +
-                ", telefono='" + telefono + '\'' +
-                ", celular='" + celular + '\'' +
-                ", estrato='" + estrato + '\'' +
-                ", eps='" + eps + '\'' +
-                ", nom_grado='" + nom_grado + '\'' +
-                ", cod_grado='" + cod_grado + '\'' +
-                '}';
+            "id=" + id +
+            ", identificacion='" + identificacion + '\'' +
+            ", tipo_id='" + tipo_id + '\'' +
+            ", primer_nombre='" + primernombre + '\'' +
+            ", segundo_nombre='" + segundonombre + '\'' +
+            ", primer_apellido='" + primerapellido + '\'' +
+            ", segundo_apellido='" + segundoapellido + '\'' +
+            ", fecha_nacimiento=" + fechanacimiento +
+            ", genero='" + genero + '\'' +
+            ", direccion='" + direccion + '\'' +
+            ", telefono='" + telefono + '\'' +
+            ", celular='" + celular + '\'' +
+            ", estrato='" + estrato + '\'' +
+            ", eps='" + eps + '\'' +
+            ", nom_grado='" + nom_grado + '\'' +
+            ", cod_grado='" + cod_grado + '\'' +
+        '}';
     }
 }

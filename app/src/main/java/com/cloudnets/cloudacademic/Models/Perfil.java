@@ -123,4 +123,21 @@ public class Perfil {
     public void setSuccess(boolean success) {
         this.success = success;
     }
+
+    @Override
+    public String toString() {
+        return "Perfil{" +
+            "id=" + id +
+            ", identificacion='" + identificacion + '\'' +
+            ", usuario='" + usuario + '\'' +
+            ", pass='" + pass + '\'' +
+            ", nombres='" + nombres + '\'' +
+            ", apellidos='" + apellidos + '\'' +
+            ", email='" + email + '\'' +
+            ", perfil='" + perfil + '\'' +
+            ", tipoUsuario='" + tipoUsuario + '\'' +
+            ", token='" + token + '\'' +
+            ", success=" + success +
+        '}';
+    }
 }

@@ -8,6 +8,7 @@ import com.cloudnets.cloudacademic.Models.Asignatura;
 import com.cloudnets.cloudacademic.Models.Curso;
 import com.cloudnets.cloudacademic.Models.Docente;
 import com.cloudnets.cloudacademic.Models.Estudiante;
+import com.cloudnets.cloudacademic.Models.Evento;
 import com.cloudnets.cloudacademic.Models.Perfil;
 import com.cloudnets.cloudacademic.R;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
@@ -36,6 +37,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper{
     private RuntimeExceptionDao<Curso, Integer> cursoRuntimeDao = null;
     private Dao<Asignatura, Integer> asignaturaDao = null;
     private RuntimeExceptionDao<Asignatura, Integer> asignaturaRuntimeDao = null;
+    private Dao<Evento, Integer> eventoDao = null;
+    private RuntimeExceptionDao<Evento, Integer> eventoRuntimeDao = null;
 
     public DatabaseHelper(Context context){
         super(context,DATABASE_NAME,null,DATABASE_VERSION, R.raw.ormlite_config);
@@ -49,6 +52,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper{
             TableUtils.createTable(source, Estudiante.class);
             TableUtils.createTable(source, Curso.class);
             TableUtils.createTable(source, Asignatura.class);
+            TableUtils.createTable(source, Evento.class);
         }catch(SQLException sqlEx){
             Log.e("DatabaseHelper(onCreate)", "Error:" + sqlEx);
             throw new RuntimeException(sqlEx);
@@ -70,6 +74,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper{
             TableUtils.dropTable(source, Estudiante.class, true);
             TableUtils.dropTable(source, Curso.class, true);
             TableUtils.dropTable(source, Asignatura.class, true);
+            TableUtils.dropTable(source, Evento.class, true);
             onCreate(db, source);
         }catch (SQLException sqlEx){
             Log.e("DatabaseHelper(onUpgrade)", "Error: " + sqlEx);
@@ -80,16 +85,20 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper{
     @Override
     public void close(){
         super.close();
+        //Dao Objects
         perfilDao = null;
         docenteDao = null;
         estudianteDao = null;
         cursoDao = null;
         asignaturaDao = null;
+        eventoDao = null;
+        //Runtime Dao
         perfilRuntimeDao = null;
         docenteRuntimeDao = null;
         estudianteRuntimeDao = null;
         cursoRuntimeDao = null;
         asignaturaRuntimeDao = null;
+        eventoRuntimeDao = null;
     }
 
     //Getters de los modelos encargados de obtener los datos
@@ -145,6 +154,17 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper{
     public RuntimeExceptionDao<Asignatura, Integer> getAsignaturaRuntimeDao(){
         if(asignaturaRuntimeDao == null) asignaturaRuntimeDao = getRuntimeExceptionDao(Asignatura.class);
         return asignaturaRuntimeDao;
+    }
+
+    //Getters del modelo asignatura asociado con el Dao de datos sin detalle de error
+    public Dao<Evento, Integer> getEventoDao() throws  SQLException{
+        if (eventoDao == null) eventoDao = getDao(Evento.class);
+        return eventoDao;
+    }
+    //Getter del modelo evento asociado al Dao de operaciones con excepciones para errores
+    public RuntimeExceptionDao<Evento, Integer> getEventoRuntimeDao(){
+        if(asignaturaRuntimeDao == null) eventoRuntimeDao = getRuntimeExceptionDao(Evento.class);
+        return eventoRuntimeDao;
     }
 
 }

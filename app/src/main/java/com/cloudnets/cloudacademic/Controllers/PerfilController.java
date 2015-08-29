@@ -5,10 +5,18 @@ import android.util.Log;
 
 import com.cloudnets.cloudacademic.Database.DatabaseHelper;
 import com.cloudnets.cloudacademic.Helpers.Funciones;
+import com.cloudnets.cloudacademic.Models.Asignatura;
+import com.cloudnets.cloudacademic.Models.Curso;
+import com.cloudnets.cloudacademic.Models.Docente;
+import com.cloudnets.cloudacademic.Models.Estudiante;
 import com.cloudnets.cloudacademic.Models.Perfil;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.UpdateBuilder;
+
+import java.util.List;
 
 /**
  * Creado por Deimer Villa on 07/07/2015.
@@ -83,7 +91,7 @@ public class PerfilController /*Clase::Controller*/{
         try {
             dbHelper = OpenHelperManager.getHelper(contexto,DatabaseHelper.class);
             RuntimeExceptionDao<Perfil, Integer> perfilDao = dbHelper.getPerfilRuntimeDao();
-            int cantidad = (int)perfilDao.queryBuilder().where().ne("token", "null").countOf();
+            int cantidad = (int)perfilDao.countOf();
             if(cantidad > 0){
                 res = true;
             }
@@ -93,18 +101,38 @@ public class PerfilController /*Clase::Controller*/{
         return res;
     }
 
-    public boolean cerrarSesion(Context contexto, Perfil perfil){
+    public boolean cerrarSesion(int id, Context contexto){
         boolean res = true;
         try {
             dbHelper = OpenHelperManager.getHelper(contexto,DatabaseHelper.class);
             RuntimeExceptionDao<Perfil, Integer> perfilDao = dbHelper.getPerfilRuntimeDao();
-            perfil.setToken("null");
-            perfilDao.update(perfil);
+            //RuntimeExceptionDao<Estudiante, Integer> estudianteDao = dbHelper.getEstudianteRuntimeDao();
+            //RuntimeExceptionDao<Docente, Integer> docenteDao = dbHelper.getDocenteRuntimeDao();
+            //RuntimeExceptionDao<Curso, Integer> cursoDao = dbHelper.getCursoRuntimeDao();
+            //RuntimeExceptionDao<Asignatura, Integer> asignaturaDao = dbHelper.getAsignaturaRuntimeDao();
+            perfilDao.deleteById(id);
         }catch (Exception ex){
             res = false;
             Log.e("PerfilController(cerrarSesion)", "Error: " + ex.toString());
         }
         return res;
+    }
+
+    public Perfil buscarPerfil(Context contexto){
+        Perfil perfil = null;
+        try {
+            dbHelper = OpenHelperManager.getHelper(contexto,DatabaseHelper.class);
+            RuntimeExceptionDao<Perfil, Integer> perfilDao = dbHelper.getPerfilRuntimeDao();
+            QueryBuilder<Perfil, Integer> builder = perfilDao.queryBuilder();
+            builder.limit(1);
+            List<Perfil> lista = perfilDao.query(builder.prepare());
+            if(!lista.isEmpty()){
+                perfil = lista.get(0);
+            }
+        }catch (Exception ex){
+            Log.e("PerfilController(buscarPerfil)", "Error: " + ex.toString());
+        }
+        return perfil;
     }
 
 }
