@@ -479,8 +479,8 @@ public class Login extends Activity {
     public void iniciarSesion2(){
         user = txtUsuario.getText().toString();
         pass = txtContrasena.getText().toString();
-        login logout = new login();
-        logout.execute();
+        login login = new login();
+        login.execute();
     }
     private class login extends AsyncTask<String, Integer, Boolean> {
         protected void onPreExecute(){
@@ -488,15 +488,13 @@ public class Login extends Activity {
         }
         protected Boolean doInBackground(String... params) {
             boolean res;
-            final String url = getString(R.string.url_con);
+            String url = getString(R.string.url_con);
             res = login(user, pass, url);
             return res;
         }
         public void onPostExecute(Boolean resul){
             funciones.cancelarDialog();
             if(resul){
-                funciones.cancelarDialog();
-
                 iniciarSesion();
             }else{
                 funciones.alertasDialog("", getString(R.string.mensaje_alerta_3));
