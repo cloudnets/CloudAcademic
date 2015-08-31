@@ -1,19 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Inicio"
-    android:id="@+id/contenedor_inicio"
-    android:background="#ff2384bb">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="#ff2384bb"
+    tools:context=".Views.Inicio">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imgLogoInicio"
-        android:src="@drawable/logo"
-        android:contentDescription="@string/logo"
-        android:layout_gravity="center_horizontal"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo"
+        android:contentDescription="@string/logo" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -21,9 +20,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/contenedor_bienvenida"
         android:layout_gravity="center"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/imgLogoInicio"
+        android:layout_centerHorizontal="true"
         android:paddingTop="10dp">
 
         <TextView
@@ -50,8 +48,8 @@
 
         <ProgressBar
             style="?android:attr/progressBarStyleLarge"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/pbProgreso"
             android:indeterminate="false"
             android:layout_marginBottom="67dp"

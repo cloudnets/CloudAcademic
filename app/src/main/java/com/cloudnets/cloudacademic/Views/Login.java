@@ -76,7 +76,7 @@ public class Login extends Activity {
         inicializarContexto();
         inicializarElementosVista();
         contador();
-        cambiarFondo();
+        iniciarElementos();
     }
 
     public void inicializarContexto(){
@@ -124,7 +124,7 @@ public class Login extends Activity {
         }.start();
     }
 
-    public void cambiarFondo(){
+    public void iniciarElementos(){
         int segundos = 3;
         int milisegundos = segundos*1000;
         new CountDownTimer(milisegundos,1000) {
@@ -170,24 +170,6 @@ public class Login extends Activity {
         }
     }
 
-    /***************Procesos de almacenado***************/
-    public boolean guardarPerfil(Perfil perfil, String url){
-        boolean res = false;
-        try {
-            boolean success = perfil.isSuccess();
-            if(success){
-                res = perfilController.crear(perfil, contexto);
-                cargarConfiguracion(perfil,url);
-            }else{
-                funciones.alertasDialog(getString(R.string.error_3),
-                        getString(R.string.mensaje_alerta_3));
-            }
-        } catch (Exception ex) {
-            Log.e("Login(guardarPerfil)", "Error: " + ex.getMessage());
-        }
-        return res;
-    }
-
     public boolean guardarDocentes(JSONArray listaDocentes){
         boolean res = true;
         ImplementacionDocente iD = new ImplementacionDocente();
@@ -211,14 +193,14 @@ public class Login extends Activity {
 
     public boolean guardarEstudiantes(JSONArray listaEstudiantes){
         boolean res = true;
-        ImplementacionEstudiante iE = new ImplementacionEstudiante();
+        //ImplementacionEstudiante iE = new ImplementacionEstudiante();
         try {
             for (int i = 0; i < listaEstudiantes.length(); i++) {
                 JSONObject jsonEstudiante = listaEstudiantes.getJSONObject(i);
                 System.out.println(jsonEstudiante.toString());
                 Estudiante estudiante = new Gson().fromJson(jsonEstudiante.toString(), Estudiante.class);
                 res = estudianteController.crear(estudiante, contexto);
-                System.out.println(iE.showDetails(estudiante));
+                //System.out.println(iE.showDetails(estudiante));
                 if(!res){
                     res = false;
                     break;
@@ -233,13 +215,13 @@ public class Login extends Activity {
 
     public boolean guardarCursos(JSONArray listaCursos){
         boolean res = true;
-        ImplementacionCurso iC = new ImplementacionCurso();
+        //ImplementacionCurso iC = new ImplementacionCurso();
         try {
             for (int i = 0; i < listaCursos.length(); i++) {
                 JSONObject jsonCurso = listaCursos.getJSONObject(i);
                 Curso curso = new Gson().fromJson(jsonCurso.toString(), Curso.class);
                 res = cursoController.crear(curso, contexto);
-                System.out.println(iC.showDetails(curso));
+                //System.out.println(iC.showDetails(curso));
                 if(!res){
                     res = false;
                     break;
@@ -254,13 +236,13 @@ public class Login extends Activity {
 
     public boolean guardarAsignaturasDocente(JSONArray listaAsignaturas){
         boolean res = true;
-        ImplementacionAsignatura iA = new ImplementacionAsignatura();
+        //ImplementacionAsignatura iA = new ImplementacionAsignatura();
         try {
             for (int i = 0; i < listaAsignaturas.length(); i++) {
                 JSONObject jsonAsignatura = listaAsignaturas.getJSONObject(i);
                 Asignatura asignatura = new Gson().fromJson(jsonAsignatura.toString(), Asignatura.class);
                 res = asignaturaController.crear(asignatura, contexto);
-                System.out.println(iA.showDetails(asignatura));
+                //System.out.println(iA.showDetails(asignatura));
                 if(!res){
                     res = false;
                     break;
@@ -433,7 +415,7 @@ public class Login extends Activity {
                 boolean success = json.getBoolean("success");
                 if(success){
                     JSONArray arrayData = json.getJSONArray("cursos");
-                    res = guardarEstudiantes(arrayData);
+                    res = guardarCursos(arrayData);
                 }
             } catch (JSONException e) {
                 Log.i("Login(obtenerCursos)", "Error JSONException: " + e.toString());
@@ -486,9 +468,11 @@ public class Login extends Activity {
             } catch (JSONException e) {
                 Log.i("Login(obtenerAsignaturasEstudiante)", "Error JSONException: " + e.toString());
             }
+
         }catch(Exception e){
             Log.i("Login(obtenerAsignaturasEstudiante)","Error Exception: "+e.toString());
         }
+
         return res;
     }
 
@@ -512,6 +496,7 @@ public class Login extends Activity {
             funciones.cancelarDialog();
             if(resul){
                 funciones.cancelarDialog();
+
                 iniciarSesion();
             }else{
                 funciones.alertasDialog("", getString(R.string.mensaje_alerta_3));

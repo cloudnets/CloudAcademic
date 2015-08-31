@@ -173,6 +173,14 @@ public class Estudiante {
         this.cod_grado = cod_grado;
     }
 
+    public String nombreCompleto(){
+        String sApe = "";
+        if(segundoapellido!=null){
+            sApe = segundoapellido;
+        }
+        return primernombre + " " + primerapellido + " " + sApe;
+    }
+
     @Override
     public String toString() {
         return "Estudiante{" +

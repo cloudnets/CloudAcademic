@@ -8,6 +8,9 @@ import com.cloudnets.cloudacademic.Models.Curso;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Creado por Deimer Villa on 24/08/2015.
  * ----------------------------------------------------
@@ -74,6 +77,19 @@ public class CursoController {
             Log.e("CursoController(detalle)", "Error: " + ex.toString());
         }
         return curso;
+    }
+
+    public List<Curso> obtenerCursos(Context context){
+        List<Curso> lista = new ArrayList<>();
+        try {
+            dbHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
+            RuntimeExceptionDao<Curso, Integer> cursoDao = dbHelper.getCursoRuntimeDao();
+            lista = cursoDao.queryBuilder().distinct().selectColumns("descripcion").query();
+            System.out.println("Curso controller: "+lista);
+        }catch (Exception ex){
+            Log.e("CursoController(obtenerCursos)", "Error: " + ex.toString());
+        }
+        return lista;
     }
 
 }

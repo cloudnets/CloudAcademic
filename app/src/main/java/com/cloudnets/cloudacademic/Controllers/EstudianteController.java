@@ -108,4 +108,16 @@ public class EstudianteController /*Clase::Controller*/{
         return listaE;
     }
 
+    public List<Estudiante> obtenerEstudianteCurso(String curso, Context context){
+        List<Estudiante> listaE = new ArrayList<>();
+        try {
+            dbHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
+            RuntimeExceptionDao<Estudiante, Integer> estudianteDao = dbHelper.getEstudianteRuntimeDao();
+            listaE = estudianteDao.queryBuilder().where().eq("nom_grado",curso).query();
+        }catch (Exception ex){
+            Log.e("EstudianteController(obtenerEstudiantes)", "Error: " + ex.toString());
+        }
+        return listaE;
+    }
+
 }
