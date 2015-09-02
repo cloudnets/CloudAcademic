@@ -50,22 +50,29 @@ public class Estudiante {
     private String nom_grado;
     @DatabaseField(canBeNull = false)
     private String cod_grado;
+    @DatabaseField(canBeNull = false)
+    private String codgradosasig;
+    @DatabaseField(canBeNull = false)
+    private String codestumatricula;
 
     //Constructor de la entidad estudiante
     public Estudiante(){}
 
     //Constructor del objeto para los datos de inicializacion
-    public Estudiante(String identificacion, String tipo_id, String primer_nombre,
-                      String segundo_nombre, String primer_apellido, String segundo_apellido,
-                      String fecha_nacimiento, String genero, String direccion, String telefono,
-                      String celular, String estrato, String eps, String nom_grado, String cod_grado) {
+
+
+    public Estudiante(String identificacion, String tipo_id, String primernombre,
+                      String segundonombre, String primerapellido, String segundoapellido,
+                      String fechanacimiento, String genero, String direccion, String telefono,
+                      String celular, String estrato, String eps, String nom_grado, String cod_grado,
+                      String codgradosasig, String codestumatricula) {
         this.identificacion = identificacion;
         this.tipo_id = tipo_id;
-        this.primernombre = primer_nombre;
-        this.segundonombre = segundo_nombre;
-        this.primerapellido = primer_apellido;
-        this.segundoapellido = segundo_apellido;
-        this.fechanacimiento = fecha_nacimiento;
+        this.primernombre = primernombre;
+        this.segundonombre = segundonombre;
+        this.primerapellido = primerapellido;
+        this.segundoapellido = segundoapellido;
+        this.fechanacimiento = fechanacimiento;
         this.genero = genero;
         this.direccion = direccion;
         this.telefono = telefono;
@@ -74,6 +81,8 @@ public class Estudiante {
         this.eps = eps;
         this.nom_grado = nom_grado;
         this.cod_grado = cod_grado;
+        this.codgradosasig = codgradosasig;
+        this.codestumatricula = codestumatricula;
     }
 
     //Getters del objeto estudiante
@@ -125,6 +134,12 @@ public class Estudiante {
     public String getCod_grado() {
         return cod_grado;
     }
+    public String getCodgradosasig() {
+        return codgradosasig;
+    }
+    public String getCodestumatricula() {
+        return codestumatricula;
+    }
 
     //Setters del objeto estudiante
     public void setIdentificacion(String identificacion) {
@@ -172,13 +187,19 @@ public class Estudiante {
     public void setCod_grado(String cod_grado) {
         this.cod_grado = cod_grado;
     }
+    public void setCodgradosasig(String codgradosasig) {
+        this.codgradosasig = codgradosasig;
+    }
+    public void setCodestumatricula(String codestumatricula) {
+        this.codestumatricula = codestumatricula;
+    }
 
     public String nombreCompleto(){
         String sApe = "";
         if(segundoapellido!=null){
             sApe = segundoapellido;
         }
-        return primernombre + " " + primerapellido + " " + sApe;
+        return primerapellido + " " + sApe + " " + primernombre;
     }
 
     @Override

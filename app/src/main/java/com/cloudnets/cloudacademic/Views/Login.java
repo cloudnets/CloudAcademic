@@ -17,7 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.cloudnets.cloudacademic.Controllers.*;
 import com.cloudnets.cloudacademic.Helpers.Funciones;
-import com.cloudnets.cloudacademic.Implementacion.*;
 import com.cloudnets.cloudacademic.Models.*;
 import com.cloudnets.cloudacademic.R;
 import com.google.gson.Gson;
@@ -64,6 +63,7 @@ public class Login extends Activity {
     private EstudianteController estudianteController;
     private CursoController cursoController;
     private AsignaturaController asignaturaController;
+
     //Contexto general de la aplicacion
     private Context contexto;
 
@@ -165,20 +165,17 @@ public class Login extends Activity {
             funciones.alertasDialog(getString(R.string.error_2),
                     getString(R.string.mensaje_alerta_2));
         }else{
-            //obtenerPerfil();
-            iniciarSesion2();
+            iniciarSesion();
         }
     }
 
     public boolean guardarDocentes(JSONArray listaDocentes){
         boolean res = true;
-        ImplementacionDocente iD = new ImplementacionDocente();
         try {
             for (int i = 0; i < listaDocentes.length(); i++) {
                 JSONObject jsonDocente = listaDocentes.getJSONObject(i);
                 Docente docente = new Gson().fromJson(jsonDocente.toString(), Docente.class);
                 res = docenteController.crear(docente, contexto);
-                System.out.println(iD.showDetails(docente));
                 if(!res){
                     res = false;
                     break;
@@ -193,14 +190,12 @@ public class Login extends Activity {
 
     public boolean guardarEstudiantes(JSONArray listaEstudiantes){
         boolean res = true;
-        //ImplementacionEstudiante iE = new ImplementacionEstudiante();
         try {
             for (int i = 0; i < listaEstudiantes.length(); i++) {
                 JSONObject jsonEstudiante = listaEstudiantes.getJSONObject(i);
                 System.out.println(jsonEstudiante.toString());
                 Estudiante estudiante = new Gson().fromJson(jsonEstudiante.toString(), Estudiante.class);
                 res = estudianteController.crear(estudiante, contexto);
-                //System.out.println(iE.showDetails(estudiante));
                 if(!res){
                     res = false;
                     break;
@@ -215,13 +210,11 @@ public class Login extends Activity {
 
     public boolean guardarCursos(JSONArray listaCursos){
         boolean res = true;
-        //ImplementacionCurso iC = new ImplementacionCurso();
         try {
             for (int i = 0; i < listaCursos.length(); i++) {
                 JSONObject jsonCurso = listaCursos.getJSONObject(i);
                 Curso curso = new Gson().fromJson(jsonCurso.toString(), Curso.class);
                 res = cursoController.crear(curso, contexto);
-                //System.out.println(iC.showDetails(curso));
                 if(!res){
                     res = false;
                     break;
@@ -236,13 +229,11 @@ public class Login extends Activity {
 
     public boolean guardarAsignaturasDocente(JSONArray listaAsignaturas){
         boolean res = true;
-        //ImplementacionAsignatura iA = new ImplementacionAsignatura();
         try {
             for (int i = 0; i < listaAsignaturas.length(); i++) {
                 JSONObject jsonAsignatura = listaAsignaturas.getJSONObject(i);
                 Asignatura asignatura = new Gson().fromJson(jsonAsignatura.toString(), Asignatura.class);
                 res = asignaturaController.crear(asignatura, contexto);
-                //System.out.println(iA.showDetails(asignatura));
                 if(!res){
                     res = false;
                     break;
@@ -257,13 +248,11 @@ public class Login extends Activity {
 
     public boolean guardarAsignaturasEstudiante(JSONArray listaAsignaturas){
         boolean res = true;
-        ImplementacionAsignatura iA = new ImplementacionAsignatura();
         try {
             for (int i = 0; i < listaAsignaturas.length(); i++) {
                 JSONObject jsonAsignatura = listaAsignaturas.getJSONObject(i);
                 Asignatura asignatura = new Gson().fromJson(jsonAsignatura.toString(), Asignatura.class);
                 res = asignaturaController.crear(asignatura, contexto);
-                System.out.println(iA.showDetails(asignatura));
                 if(!res){
                     res = false;
                     break;
@@ -468,15 +457,13 @@ public class Login extends Activity {
             } catch (JSONException e) {
                 Log.i("Login(obtenerAsignaturasEstudiante)", "Error JSONException: " + e.toString());
             }
-
         }catch(Exception e){
             Log.i("Login(obtenerAsignaturasEstudiante)","Error Exception: "+e.toString());
         }
-
         return res;
     }
 
-    public void iniciarSesion2(){
+    public void iniciarSesion(){
         user = txtUsuario.getText().toString();
         pass = txtContrasena.getText().toString();
         login login = new login();
@@ -495,17 +482,23 @@ public class Login extends Activity {
         public void onPostExecute(Boolean resul){
             funciones.cancelarDialog();
             if(resul){
-                iniciarSesion();
+                accederMenuPrincipal();
             }else{
                 funciones.alertasDialog("", getString(R.string.mensaje_alerta_3));
+                txtContrasena.setText("");
             }
         }
     }
 
-    public void iniciarSesion(){
+    public void accederMenuPrincipal(){
         Intent login = new Intent(Login.this,Principal.class);
         login.putExtra("id", perfil.getId());
         startActivity(login);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
 }

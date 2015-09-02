@@ -1,5 +1,5 @@
 #
-# generated on 2015/08/27 10:18:45
+# generated on 2015/09/01 01:39:46
 #
 # --table-start--
 dataClass=com.cloudnets.cloudacademic.Models.Asignatura
@@ -57,6 +57,11 @@ indexName=cursos_descripcion_idx
 # --field-start--
 fieldName=inthoraria
 indexName=cursos_inthoraria_idx
+# --field-end--
+# --field-start--
+fieldName=usucoordinador
+canBeNull=false
+indexName=cursos_usucoordinador_idx
 # --field-end--
 # --table-fields-end--
 # --table-end--
@@ -164,6 +169,84 @@ canBeNull=false
 fieldName=cod_grado
 canBeNull=false
 # --field-end--
+# --field-start--
+fieldName=codgradosasig
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=codestumatricula
+canBeNull=false
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.cloudnets.cloudacademic.Models.Evento
+tableName=eventos
+# --table-fields-start--
+# --field-start--
+fieldName=id
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=codigo
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=nombre_actividad
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=descripcion
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=startday
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=endday
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=cod_docente
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=curso
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=asignatura
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=createdday
+canBeNull=false
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.cloudnets.cloudacademic.Models.Inasistencia
+tableName=inasistencias
+# --table-fields-start--
+# --field-start--
+fieldName=id
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=codgradoasig
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=codestumatricula
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=observaciones
+canBeNull=false
+# --field-end--
 # --table-fields-end--
 # --table-end--
 #################################
@@ -213,6 +296,29 @@ fieldName=token
 # --field-end--
 # --field-start--
 fieldName=success
+canBeNull=false
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.cloudnets.cloudacademic.Models.ReporteInasistencia
+tableName=reportes
+# --table-fields-start--
+# --field-start--
+fieldName=id
+generatedId=true
+# --field-end--
+# --field-start--
+fieldName=idInasistencia
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=nombreCompleto
+canBeNull=false
+# --field-end--
+# --field-start--
+fieldName=identificacion
 canBeNull=false
 # --field-end--
 # --table-fields-end--

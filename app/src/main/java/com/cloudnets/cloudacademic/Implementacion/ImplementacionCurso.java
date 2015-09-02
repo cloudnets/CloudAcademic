@@ -17,6 +17,7 @@ public class ImplementacionCurso {
             "Codigo='" + curso.getCodigo() + '\'' +
             ", Descripcion= '" + curso.getDescripcion() + '\'' +
             ", Intensidad Horaria='" + curso.getInthoraria() + '\'' +
+            ", Usuario Coordinador='" + curso.getUsucoordinador() + '\'' +
         '}';
     }
 

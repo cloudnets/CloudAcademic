@@ -24,13 +24,16 @@ public class Curso {
     private String descripcion;
     @DatabaseField(index = true, canBeNull = true)
     private String inthoraria;
+    @DatabaseField(index = true, canBeNull = false)
+    private String usucoordinador;
 
     public Curso(){}
 
-    public Curso(String codigo, String descripcion, String inthoraria) {
+    public Curso(String codigo, String descripcion, String inthoraria, String codcoordinador) {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.inthoraria = inthoraria;
+        this.usucoordinador = codcoordinador;
     }
 
     //Getters del objeto curso
@@ -46,6 +49,9 @@ public class Curso {
     public String getInthoraria() {
         return inthoraria;
     }
+    public String getUsucoordinador() {
+        return usucoordinador;
+    }
 
     //Setters del objeto curso
     public void setCodigo(String codigo) {
@@ -57,14 +63,18 @@ public class Curso {
     public void setInthoraria(String inthoraria) {
         this.inthoraria = inthoraria;
     }
+    public void setUsucoordinador(String usucoordinador) {
+        this.usucoordinador = usucoordinador;
+    }
 
     @Override
     public String toString() {
         return "Curso{" +
-                "id=" + id +
-                ", codigo='" + codigo + '\'' +
-                ", descripcion='" + descripcion + '\'' +
-                ", inthoraria='" + inthoraria + '\'' +
-                '}';
+            "id=" + id +
+            ", codigo='" + codigo + '\'' +
+            ", descripcion='" + descripcion + '\'' +
+            ", inthoraria='" + inthoraria + '\'' +
+            ", usucoordinador='" + usucoordinador + '\'' +
+        '}';
     }
 }

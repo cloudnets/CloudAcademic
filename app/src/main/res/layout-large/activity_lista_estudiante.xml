@@ -1,7 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.cloudnets.cloudacademic.Views.ListaEstudiantes"
     android:background="#ff2384bb"
     android:id="@+id/contenedor_lista_estudiantes">
 
@@ -14,7 +14,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="90dp"
             android:id="@+id/contenedor_icono_perfil"
             android:paddingLeft="10dp"
             android:baselineAligned="false">
@@ -31,7 +31,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/iconRegresarMenu"
-                    android:src="@drawable/titulo"
+                    android:src="@drawable/titulo2"
                     android:contentDescription="@string/icon_perfil"
                     android:background="#001e6893"
                     android:layout_gravity="left" />
@@ -60,14 +60,16 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/lblTipoUsuarioLista"
                         android:layout_gravity="center_horizontal"
-                        android:gravity="center" />
+                        android:gravity="center"
+                        android:textSize="17dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/lblNombresLista"
-                        android:gravity="center" />
+                        android:gravity="center"
+                        android:textSize="17dp"/>
 
                 </LinearLayout>
 
@@ -77,9 +79,14 @@
                     android:id="@+id/iconoDatosPerfil"
                     android:contentDescription="@string/icon_perfil"
                     android:background="#001e6893"
-                    android:src="@drawable/user"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1" />
+                    android:src="@drawable/ic_user"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:minHeight="90dp"
+                    android:layout_marginTop="10dp"
+
+                    />
+
             </LinearLayout>
 
         </LinearLayout>
@@ -87,26 +94,43 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="70dp"
             android:id="@+id/contenedor_filtro"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:gravity="center">
 
+            <TextView
+                android:layout_width="100dp"
+                android:text="Curso:"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:id="@+id/lblTituloCurso"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="-90dp"
+                android:layout_marginRight="-20dp"
+                android:height="50dp"
+                android:textSize="17dp"
+                />
+
             <Spinner
-                android:layout_width="180dp"
+                android:layout_width="230dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/spCursos"
                 android:layout_gravity="center_vertical" />
 
             <Button
-                android:layout_width="130dp"
+                android:layout_width="160dp"
                 android:layout_height="45dp"
                 android:text="@string/guardar"
                 android:id="@+id/butGuardar"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/bordes_button"
-                android:textColor="#226183" />
+                android:textColor="#226183"
+                android:layout_marginLeft="55dp"
+                android:layout_marginRight="-60dp"
+                />
 
         </LinearLayout>
 
@@ -162,10 +186,13 @@
                     android:orientation="vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/contenedor_tarjetas"></LinearLayout>
+                    android:id="@+id/contenedor_tarjetas">
+
+                </LinearLayout>
             </ScrollView>
 
         </LinearLayout>
 
     </LinearLayout>
+
 </RelativeLayout>

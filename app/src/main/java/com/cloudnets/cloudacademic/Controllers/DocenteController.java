@@ -10,7 +10,7 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
 /**
  * Creado por Deimer Villa on 24/08/2015.
  */
-public class DocenteController {
+public class DocenteController /*Clase::Controller*/{
 
     //Variable que permite traer las funciones de la base de datos
     private DatabaseHelper dbHelper;

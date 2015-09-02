@@ -9,7 +9,9 @@ import com.cloudnets.cloudacademic.Models.Curso;
 import com.cloudnets.cloudacademic.Models.Docente;
 import com.cloudnets.cloudacademic.Models.Estudiante;
 import com.cloudnets.cloudacademic.Models.Evento;
+import com.cloudnets.cloudacademic.Models.Inasistencia;
 import com.cloudnets.cloudacademic.Models.Perfil;
+import com.cloudnets.cloudacademic.Models.ReporteInasistencia;
 import com.cloudnets.cloudacademic.R;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
@@ -39,6 +41,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper{
     private RuntimeExceptionDao<Asignatura, Integer> asignaturaRuntimeDao = null;
     private Dao<Evento, Integer> eventoDao = null;
     private RuntimeExceptionDao<Evento, Integer> eventoRuntimeDao = null;
+    private Dao<Inasistencia, Integer> inasistenciaDao = null;
+    private RuntimeExceptionDao<Inasistencia, Integer> inasistenciaRuntimeDao = null;
+    private Dao<ReporteInasistencia, Integer> reporteDao = null;
+    private RuntimeExceptionDao<ReporteInasistencia, Integer> reporteRuntimeDao = null;
 
     public DatabaseHelper(Context context){
         super(context,DATABASE_NAME,null,DATABASE_VERSION, R.raw.ormlite_config);
@@ -53,6 +59,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper{
             TableUtils.createTable(source, Curso.class);
             TableUtils.createTable(source, Asignatura.class);
             TableUtils.createTable(source, Evento.class);
+            TableUtils.createTable(source, Inasistencia.class);
+            TableUtils.createTable(source, ReporteInasistencia.class);
         }catch(SQLException sqlEx){
             Log.e("DatabaseHelper(onCreate)", "Error:" + sqlEx);
             throw new RuntimeException(sqlEx);
@@ -75,6 +83,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper{
             TableUtils.dropTable(source, Curso.class, true);
             TableUtils.dropTable(source, Asignatura.class, true);
             TableUtils.dropTable(source, Evento.class, true);
+            TableUtils.dropTable(source, Inasistencia.class, true);
+            TableUtils.dropTable(source, ReporteInasistencia.class, true);
             onCreate(db, source);
         }catch (SQLException sqlEx){
             Log.e("DatabaseHelper(onUpgrade)", "Error: " + sqlEx);
@@ -92,6 +102,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper{
         cursoDao = null;
         asignaturaDao = null;
         eventoDao = null;
+        inasistenciaDao = null;
+        reporteDao = null;
         //Runtime Dao
         perfilRuntimeDao = null;
         docenteRuntimeDao = null;
@@ -99,6 +111,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper{
         cursoRuntimeDao = null;
         asignaturaRuntimeDao = null;
         eventoRuntimeDao = null;
+        inasistenciaRuntimeDao = null;
+        reporteRuntimeDao = null;
     }
 
     //Getters de los modelos encargados de obtener los datos
@@ -165,6 +179,28 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper{
     public RuntimeExceptionDao<Evento, Integer> getEventoRuntimeDao(){
         if(asignaturaRuntimeDao == null) eventoRuntimeDao = getRuntimeExceptionDao(Evento.class);
         return eventoRuntimeDao;
+    }
+
+    //Getters del modelo inasistencia asociado con el Dao de datos sin detalle de error
+    public Dao<Inasistencia, Integer> getInasistenciaDao() throws  SQLException{
+        if (inasistenciaDao == null) inasistenciaDao = getDao(Inasistencia.class);
+        return inasistenciaDao;
+    }
+    //Getter del modelo inasistencia asociado al Dao de operaciones con excepciones para errores
+    public RuntimeExceptionDao<Inasistencia, Integer> getInasistenciaRuntimeDao(){
+        if(inasistenciaRuntimeDao == null) inasistenciaRuntimeDao = getRuntimeExceptionDao(Inasistencia.class);
+        return inasistenciaRuntimeDao;
+    }
+
+    //Getters del modelo rporte de inasistencia asociado con el Dao de datos sin detalle de error
+    public Dao<ReporteInasistencia, Integer> getReporteDao() throws  SQLException{
+        if (reporteDao == null) reporteDao = getDao(ReporteInasistencia.class);
+        return reporteDao;
+    }
+    //Getter del modelo reporte de inasistencia asociado al Dao de operaciones con excepciones para errores
+    public RuntimeExceptionDao<ReporteInasistencia, Integer> getReporteRuntimeDao(){
+        if(reporteRuntimeDao == null) reporteRuntimeDao = getRuntimeExceptionDao(ReporteInasistencia.class);
+        return reporteRuntimeDao;
     }
 
 }

@@ -28,21 +28,26 @@
     <string name="nombre">Scarlet Johannson</string>
     <string name="inasistencias"># de inasistencias: 4</string>
     <string name="guardar">Guardar Datos</string>
+    <string name="sincronizar">Sincronizar Información</string>
+    <string name="descargando">Sincronizando Información</string>
+    <string name="mensaje_descarga">Descargando reporte de inasistencias</string>
 
     <!-- String de titulos de errores -->
     <string name="error_1">Error de conexión.</string>
     <string name="error_2">Error en credenciales.</string>
     <string name="error_3">Error al validar.</string>
     <string name="error_4">Seleccione una institución</string>
+    <string name="error_5">Error en reporte</string>
 
-    <!-- String mensajes de alertas -->
+        <!-- String mensajes de alertas -->
     <string name="mensaje_alerta_1">No se ah detectado una conexión activa a internet,
         por favor revise el estado de su red.</string>
     <string name="mensaje_alerta_2">Los campos de las credenciales no pueden estar vacios.</string>
     <string name="mensaje_alerta_3">El usuario o la contraseña no son validos.</string>
     <string name="mensaje_alerta_4">Antes de avanzar, primero debe seleccionar una institución de la lista de opciones.</string>
+    <string name="mensaje_alerta_5">Error al cargar el reporte de inasistencias.</string>
 
-    <!-- String titulos de mensajes de confirmacion -->
+        <!-- String titulos de mensajes de confirmacion -->
     <string name="confirmacion_1">Cerrar la sesión.</string>
 
     <!-- String mensajes de confirmación -->
@@ -66,5 +71,6 @@
         comunicación con un asesor los días hábiles del año.</string>
     <string name="title_activity_lista_estudiantes">Lista de Estudiantes</string>
 
-    <string name="hello_world">Hello world!</string>
+    <string name="notificacion_titulo">Notificación de CloudNets</string>
+    <string name="notificacion_mensaje">Se han generado una alerta en la asistencia escolar</string>
 </resources>

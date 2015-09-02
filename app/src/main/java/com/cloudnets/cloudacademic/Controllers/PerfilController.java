@@ -58,20 +58,6 @@ public class PerfilController /*Clase::Controller*/{
         return res;
     }
 
-    //Funcion que permite eliminar un usuario de la base de datos
-    public boolean eliminar(Perfil perfil, Context context){
-        boolean res = true;
-        try {
-            dbHelper = OpenHelperManager.getHelper(context,DatabaseHelper.class);
-            RuntimeExceptionDao<Perfil, Integer> perfilDao = dbHelper.getPerfilRuntimeDao();
-            perfilDao.delete(perfil);
-        } catch (Exception ex) {
-            res = false;
-            Log.e("PerfilController(eliminar)", "Error: " + ex.toString());
-        }
-        return res;
-    }
-
     //Funcion que permite la busqueda de un perfil mediante su id
     public Perfil detalle(int id, Context context){
         Perfil perfil;
@@ -106,10 +92,6 @@ public class PerfilController /*Clase::Controller*/{
         try {
             dbHelper = OpenHelperManager.getHelper(contexto,DatabaseHelper.class);
             RuntimeExceptionDao<Perfil, Integer> perfilDao = dbHelper.getPerfilRuntimeDao();
-            //RuntimeExceptionDao<Estudiante, Integer> estudianteDao = dbHelper.getEstudianteRuntimeDao();
-            //RuntimeExceptionDao<Docente, Integer> docenteDao = dbHelper.getDocenteRuntimeDao();
-            //RuntimeExceptionDao<Curso, Integer> cursoDao = dbHelper.getCursoRuntimeDao();
-            //RuntimeExceptionDao<Asignatura, Integer> asignaturaDao = dbHelper.getAsignaturaRuntimeDao();
             perfilDao.deleteById(id);
         }catch (Exception ex){
             res = false;

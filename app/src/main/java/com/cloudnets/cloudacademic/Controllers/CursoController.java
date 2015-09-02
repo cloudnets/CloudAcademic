@@ -18,7 +18,7 @@ import java.util.List;
  * de la logica de los datos del modelo (Curso)
  * que se tiene que llevar a cabo por la aplicacion.
  */
-public class CursoController {
+public class CursoController /*Clase::Controller*/{
 
     //Variable que permite traer las funciones de la base de datos
     private DatabaseHelper dbHelper;
@@ -84,7 +84,7 @@ public class CursoController {
         try {
             dbHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
             RuntimeExceptionDao<Curso, Integer> cursoDao = dbHelper.getCursoRuntimeDao();
-            lista = cursoDao.queryBuilder().distinct().selectColumns("descripcion").query();
+            lista = cursoDao.queryBuilder().distinct().selectColumns("id","descripcion").orderBy("id",true).query();
             System.out.println("Curso controller: "+lista);
         }catch (Exception ex){
             Log.e("CursoController(obtenerCursos)", "Error: " + ex.toString());

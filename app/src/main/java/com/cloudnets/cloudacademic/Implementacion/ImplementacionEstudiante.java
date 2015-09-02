@@ -26,6 +26,8 @@ public class ImplementacionEstudiante {
                 ", EPS='" + estudiante.getEps() + '\'' +
                 ", Grado='" + estudiante.getNom_grado() + '\'' +
                 ", Codigo del grado='" + estudiante.getCod_grado() + '\'' +
+                ", Codigo GradoAsig='" + estudiante.getCodgradosasig() + '\'' +
+                ", Codigo EstuMatricula='" + estudiante.getCodestumatricula() + '\'' +
                 '}';
     }
 

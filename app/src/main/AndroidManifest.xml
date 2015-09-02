@@ -13,7 +13,9 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <permission android:name="com.cloudnets.cloudacademic.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+
+    <permission android:name="com.cloudnets.cloudacademic.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
     <uses-permission android:name="com.cloudnets.cloudacademic.permission.C2D_MESSAGE" />
 
     <application
@@ -21,19 +23,19 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name" >
 
-        <!--<receiver
-            android:name=".GCMBroadcastReceiver"
+        <receiver
+            android:name=".ApiService$GCMBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <category android:name="com.cloudnets.cloudacademic" />
             </intent-filter>
         </receiver>
-        <service android:name=".GCMIntentService" />-->
+        <service android:name=".ApiService$GCMIntentService" />
 
         <!-- Actividad de logo de bienvenida -->
         <activity
-            android:name=".Views.Inicio"
+            android:name=".Views$Inicio"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/StartTheme" >
@@ -45,7 +47,7 @@
         </activity>
         <!-- Actividad de fondo -->
         <activity
-            android:name=".Views.Login"
+            android:name=".Views$Login"
             android:label="@string/title_login"
             android:screenOrientation="portrait"
             android:theme="@style/StartTheme" >
@@ -57,33 +59,37 @@
         </activity>
         <!-- Actividad del menú principal -->
         <activity
-            android:name=".Views.Principal"
+            android:name=".Views$Principal"
             android:label="@string/title_principal"
             android:screenOrientation="portrait"
             android:theme="@style/MaterialTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <!-- Actividad de la seleccion de colegios -->
         <activity
-            android:name=".Views.Colegios"
+            android:name=".Views$Colegios"
             android:label="@string/title_activity_colegios"
             android:screenOrientation="portrait"
             android:theme="@style/MaterialTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <!-- Actividad de la lista de estudiantes -->
         <activity
-            android:name=".Views.ListaEstudiantes"
+            android:name=".Views$ListaEstudiantes"
             android:label="@string/title_activity_lista_estudiantes"
+            android:screenOrientation="portrait"
             android:theme="@style/MaterialTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

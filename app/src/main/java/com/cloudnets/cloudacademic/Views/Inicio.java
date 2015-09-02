@@ -26,9 +26,6 @@ public class Inicio extends Activity {
     ProgressBar pbProgreso;
     //Clase controladora de consultas del objeto perfil
     private PerfilController perfilController = new PerfilController();
-    private DocenteController docenteController = new DocenteController();
-    private EstudianteController estudianteController = new EstudianteController();
-    private ImplementacionPerfil implementacionPerfil = new ImplementacionPerfil();
     //Contexto general de la aplicacion
     private Context contexto = this;
 

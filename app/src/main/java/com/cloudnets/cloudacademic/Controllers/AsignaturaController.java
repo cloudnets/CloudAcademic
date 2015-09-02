@@ -14,7 +14,7 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
  * de la logica de los datos del modelo (Asignatura)
  * que se tiene que llevar a cabo por la aplicacion.
  */
-public class AsignaturaController {
+public class AsignaturaController /*Clase::Controller*/{
 
     //Variable que permite traer las funciones de la base de datos
     private DatabaseHelper dbHelper;
